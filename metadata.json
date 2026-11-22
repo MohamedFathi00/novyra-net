@@ -1,0 +1,6 @@
+{
+  "name": "NOVYRA Net",
+  "description": "Internet Speed Testing, Network Intelligence & Diagnostics Platform — Your Connection. Fully Understood.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

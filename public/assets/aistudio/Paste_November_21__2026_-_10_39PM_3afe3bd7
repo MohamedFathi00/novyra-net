@@ -1,0 +1,1998 @@
+# NOVYRA NET — MASTER UPGRADE & COMMERCIAL PLATFORM PROMPT
+## Complete Existing Project Upgrade | Authentication | Subscriptions | Premium Features | Admin Dashboard | Network Intelligence
+
+Act as a senior software architect, SaaS product engineer, UI/UX designer, frontend engineer, backend engineer, networking engineer, database architect, cybersecurity engineer, payment integration engineer, and QA specialist.
+
+Your task is to continue developing the **existing NOVYRA Net project** inside Google AI Studio Build mode.
+
+This is an upgrade and expansion of an existing application, not a new project.
+
+You must inspect the existing project, understand its architecture, review its implemented features, and extend it without destroying or unnecessarily replacing existing functionality.
+
+Build a complete, production-minded commercial SaaS application with user authentication, subscription management, premium features, cloud services, network intelligence, and an administration dashboard.
+
+**Do not merely describe the implementation. Implement the actual working application.**
+
+---
+
+# 1. CRITICAL EXISTING PROJECT PRESERVATION
+
+Before changing anything:
+
+1. Inspect all existing project files.
+2. Understand the current React and TypeScript architecture.
+3. Inspect existing components, pages, services, hooks, and data models.
+4. Identify the existing NOVYRA Net dashboard.
+5. Identify the existing speed test implementation.
+6. Identify existing network diagnostics functionality.
+7. Identify existing charts and monitoring features.
+8. Identify existing settings and localization.
+9. Identify existing data persistence.
+10. Identify incomplete features and technical problems.
+
+IMPORTANT:
+
+- Do not delete the existing application.
+- Do not replace the existing dashboard with a generic template.
+- Do not unnecessarily rewrite working components.
+- Do not remove previously implemented features.
+- Preserve the existing NOVYRA visual identity.
+- Preserve existing functionality while improving it.
+- Reuse existing components and services wherever practical.
+- Migrate existing data safely when database changes are necessary.
+- Avoid duplicate implementations of existing features.
+- Keep the application compatible with the existing project environment.
+
+After inspecting the project, create a safe implementation strategy and begin development.
+
+Do not stop after producing a plan.
+
+---
+
+# 2. PRODUCT VISION
+
+Product name:
+
+**NOVYRA Net**
+
+Product category:
+
+Internet Speed Testing, Network Intelligence & Diagnostics Platform.
+
+Tagline:
+
+**Your Connection. Fully Understood.**
+
+Arabic:
+
+**اتصالك تحت السيطرة — اختبر، راقب، وحلّل شبكتك.**
+
+NOVYRA Net must become a professional commercial product with three subscription tiers:
+
+1. NOVYRA Free.
+2. NOVYRA Pro.
+3. NOVYRA Business.
+
+The application should serve:
+
+- Regular internet users.
+- Gamers.
+- Streamers.
+- Content creators.
+- Developers.
+- Remote workers.
+- IT professionals.
+- Network administrators.
+- Small businesses.
+- Technical support teams.
+
+The application must combine network diagnostics, speed testing, network monitoring, performance analytics, AI assistance, and subscription-based premium services.
+
+---
+
+# 3. PRODUCT ARCHITECTURE
+
+Organize NOVYRA Net into the following major systems:
+
+1. Public Website and Landing Page.
+2. User Authentication System.
+3. User Account Management.
+4. Main NOVYRA Net Application.
+5. Internet Speed Testing Engine.
+6. Network Monitoring System.
+7. Network Diagnostics.
+8. Advanced Analytics.
+9. NOVYRA AI Network Advisor.
+10. Subscription and Billing System.
+11. Premium Feature Management.
+12. Cloud Synchronization.
+13. Business Workspace.
+14. Administration Dashboard.
+15. Notification System.
+16. Support and Help Center.
+17. Security and Privacy Management.
+
+Maintain modular architecture.
+
+Suggested architecture:
+
+- React.
+- TypeScript.
+- Vite when supported.
+- Modern CSS.
+- CSS Grid and Flexbox.
+- Lucide icons.
+- Firebase Authentication if supported and properly configured.
+- Cloud Firestore or another appropriate secure database.
+- Server-side functions or a secure backend API.
+- Secure payment provider integration.
+- IndexedDB or localStorage for appropriate local data.
+- Modular service and repository architecture.
+
+Do not put database administration, payment secrets, or privileged authorization logic inside frontend code.
+
+---
+
+# 4. AUTHENTICATION AND USER ACCOUNT SYSTEM
+
+This is a mandatory feature.
+
+Users must be able to register, sign in, manage their accounts, and purchase subscriptions.
+
+Create a complete authentication experience.
+
+## 4.1 Public landing page
+
+Before authentication, users should see a professional NOVYRA Net landing page.
+
+Include:
+
+- NOVYRA branding.
+- Product overview.
+- Main features.
+- Free and Pro plan comparison.
+- Business plan overview.
+- Screenshots or product previews using existing UI assets.
+- Pricing section.
+- Frequently asked questions.
+- Sign In button.
+- Create Account button.
+- Start Free button.
+
+The landing page must be responsive and support Arabic and English.
+
+## 4.2 Registration
+
+Create a polished registration page.
+
+Fields:
+
+- Full name.
+- Email address.
+- Password.
+- Confirm password.
+- Optional country.
+- Agreement to Terms of Service.
+- Agreement to Privacy Policy.
+
+Requirements:
+
+- Validate email addresses.
+- Validate password strength.
+- Prevent duplicate accounts.
+- Provide useful validation errors.
+- Provide password visibility controls.
+- Support email verification.
+- Provide loading and success states.
+- Never store plaintext passwords.
+
+## 4.3 Login
+
+Provide:
+
+- Email and password login.
+- Google sign-in where configured.
+- Remember session where supported.
+- Forgot password.
+- Email verification status.
+- Clear authentication errors.
+- Secure logout.
+
+## 4.4 Password recovery
+
+Implement:
+
+- Forgot password screen.
+- Password reset email.
+- Secure reset flow.
+- Expired-token handling.
+- Password update confirmation.
+
+## 4.5 User profile
+
+Create a complete account settings area.
+
+Users can:
+
+- View their name and email.
+- Change display name.
+- Upload or change profile picture.
+- Change password.
+- Manage verified email.
+- View account creation date.
+- View account status.
+- View subscription status.
+- Manage connected login providers.
+- Sign out.
+- Request account deletion.
+
+## 4.6 User sessions
+
+Implement:
+
+- Secure authentication sessions.
+- Session expiration handling.
+- Logout.
+- Revocation of sessions where supported.
+- Reauthentication for sensitive actions.
+
+Do not implement fake authentication using localStorage flags.
+
+Authentication must be validated by the real authentication provider.
+
+## 4.7 Guest and existing local users
+
+Preserve compatibility with the existing application.
+
+If the current project already contains local user data, provide a safe migration workflow.
+
+If guest mode is retained, allow local basic usage without an account where practical.
+
+However:
+
+- Cloud synchronization requires authentication.
+- Subscription purchases require authentication.
+- Account-based Pro and Business entitlements require a verified user identity.
+
+Never discard existing local history during account migration.
+
+---
+
+# 5. SUBSCRIPTION PLANS AND FEATURE ACCESS
+
+Create a complete subscription and entitlement system.
+
+The three plans are:
+
+- Free.
+- Pro.
+- Business.
+
+Use a centralized plan configuration.
+
+Never hard-code subscription privileges separately in individual UI components.
+
+All subscription prices, limits, and features must be configurable from a secure backend or administrator-controlled configuration.
+
+## 5.1 NOVYRA FREE
+
+<escape>Plan ID: free</escape>
+
+Price: $0.
+
+Target audience: Everyday users.
+
+Included features:
+
+### Speed Testing
+
+- Basic download speed tests.
+- Basic upload speed tests.
+- Ping measurement.
+- Basic latency measurement.
+- Basic jitter measurement when supported.
+- Standard test server selection.
+- Basic speed results.
+
+### History
+
+- Store the latest 20 test records.
+- View previous results.
+- Basic filtering.
+- Basic comparison.
+
+### Network Tools
+
+- Basic IP information.
+- DNS lookup.
+- Basic Ping Tool.
+- Basic network connection information.
+
+### Monitoring
+
+- Monitoring while the application is open.
+- Basic live speed visualization.
+- Basic connection status.
+
+### Reports
+
+- View test results.
+- Manual CSV export.
+
+### Interface
+
+- Dark and light themes.
+- Arabic and English.
+- Standard dashboard.
+- Basic customization.
+
+### AI
+
+- Limited introductory AI usage only if configured.
+- Otherwise provide a clear upgrade explanation.
+
+The Free plan must remain genuinely useful.
+
+Do not disable essential basic speed testing to force subscriptions.
+
+## 5.2 NOVYRA PRO
+
+<escape>Plan ID: pro</escape>
+
+Price: Configurable monthly and annually.
+
+Target audience: Professional users, gamers, creators, and advanced internet users.
+
+Unlock all Free features plus:
+
+### Advanced Speed Testing
+
+- Advanced speed testing options.
+- Configurable test profiles.
+- Extended measurement history.
+- Advanced server comparison.
+- Detailed latency measurements.
+- More detailed test reports.
+- Advanced connection quality analysis.
+
+### Unlimited History
+
+- Unlimited test records subject to reasonable service storage policies.
+- Advanced filters.
+- Searchable test history.
+- Historical performance comparisons.
+- Advanced analytics.
+
+### Advanced Monitoring
+
+- Continuous connection monitoring through an appropriate running desktop service or configured cloud monitoring architecture.
+- Connection interruption detection.
+- Uptime tracking.
+- Historical uptime reports.
+- Custom monitoring intervals.
+- Speed threshold alerts.
+- High-latency alerts.
+- Connection failure alerts.
+
+Monitoring must clearly distinguish local desktop monitoring from remote cloud monitoring.
+
+### Advanced Wi-Fi Intelligence
+
+Where supported by the operating system:
+
+- Wi-Fi signal strength.
+- Signal quality.
+- Network name.
+- Available network information.
+- Channel information.
+- Channel congestion analysis when accessible.
+- Network comparison.
+- Wi-Fi connection quality reports.
+
+Do not fabricate unavailable Wi-Fi information.
+
+### Bandwidth Intelligence
+
+Where desktop integration supports it:
+
+- Application-level network usage.
+- Download and upload traffic by application.
+- Bandwidth consumption history.
+- Usage trends.
+- Traffic distribution.
+- High-usage application identification.
+
+Do not claim system-wide application monitoring through ordinary browser APIs.
+
+### Advanced Network Diagnostics
+
+- Advanced DNS Checker.
+- DNS response analysis.
+- Traceroute through supported backend or desktop integration.
+- Port diagnostics through secure supported services.
+- Connection diagnostics.
+- Advanced latency testing.
+- Advanced network reports.
+
+### Gaming Mode
+
+Create a dedicated Gaming Network Analyzer.
+
+Include:
+
+- Latency.
+- Jitter.
+- Packet loss when measurable.
+- Connection stability.
+- Gaming connection quality assessment.
+- Historical gaming performance.
+- Server comparison.
+- Troubleshooting recommendations.
+
+Do not promise lower ping or automatic game acceleration unless a real, tested feature supports it.
+
+### NOVYRA AI PRO
+
+Include an advanced AI Network Advisor.
+
+Features:
+
+- Analyze saved tests.
+- Explain poor connection quality.
+- Identify likely performance issues.
+- Recommend troubleshooting steps.
+- Compare current and historical performance.
+- Analyze latency and jitter.
+- Explain packet loss.
+- Provide gaming-related network guidance.
+- Generate network health summaries.
+- Answer network-related questions.
+
+Implement configurable monthly AI usage quotas.
+
+Display the remaining AI allowance.
+
+Use a real configured AI provider.
+
+Never expose API keys.
+
+### Professional Reports
+
+- Branded PDF reports.
+- Advanced CSV exports.
+- Daily reports.
+- Weekly reports.
+- Monthly reports.
+- Network performance reports.
+- Gaming connection reports.
+- Uptime reports.
+
+### Cloud Features
+
+- Cloud history backup.
+- Cloud synchronization.
+- Multi-device account access.
+- Restore backed-up test history.
+- Synchronize settings.
+- Cross-device preferences.
+
+### Customization
+
+- Custom dashboards.
+- Additional chart options.
+- Advanced monitoring preferences.
+- Custom alerts.
+- Advanced appearance preferences.
+
+### Support
+
+- Priority support request handling.
+- Premium support ticket category.
+
+## 5.3 NOVYRA BUSINESS
+
+<escape>Plan ID: business</escape>
+
+Price: Configurable monthly and annually.
+
+Target audience:
+
+- Businesses.
+- IT teams.
+- Network administrators.
+- Technical support teams.
+- Organizations managing multiple devices.
+
+Includes all Pro features plus:
+
+### Multi-Device Management
+
+- Manage multiple authorized devices.
+- Register and remove devices.
+- View device status.
+- View device connection history.
+- Monitor connected devices through supported desktop agents.
+- Device labels and grouping.
+
+### Organization Workspace
+
+- Create an organization.
+- Invite team members.
+- Manage organization members.
+- Assign roles.
+- Manage device access.
+- Manage monitoring permissions.
+
+### Team Roles
+
+- Owner.
+- Administrator.
+- Network Manager.
+- Viewer.
+
+Enforce role permissions on the server.
+
+### Centralized Monitoring
+
+- Multiple device monitoring.
+- Centralized network overview.
+- Group performance statistics.
+- Device comparison.
+- Connection outage overview.
+- Historical reports.
+
+### Business Analytics
+
+- Organization-wide performance analytics.
+- Device uptime reports.
+- Connection quality comparisons.
+- Usage trends.
+- Exportable reports.
+
+### Business Integrations
+
+- Secure API access where configured.
+- API usage tracking.
+- Webhook integrations.
+- Alert integrations.
+- Organization-level settings.
+
+### Branding
+
+- Branded reports.
+- Organization name.
+- Organization logo.
+- Custom report appearance.
+
+### Business Support
+
+- Priority support.
+- Organization support tickets.
+- Account and team assistance.
+
+Implement Business features only when the required backend and desktop integrations exist.
+
+Do not display fake device monitoring or simulated organization data.
+
+---
+
+# 6. SUBSCRIPTION PRICING AND BILLING
+
+Create a complete subscription management system.
+
+The pricing must be configurable.
+
+Do not invent final commercial prices.
+
+Provide administrator-configurable:
+
+- Pro monthly price.
+- Pro annual price.
+- Business monthly price.
+- Business annual price.
+- Currency.
+- Promotional pricing.
+- Trial duration.
+- AI usage allowance.
+- Device limits.
+- Organization limits.
+- Plan feature entitlements.
+
+## 6.1 Pricing page
+
+Create a premium pricing page.
+
+Display three pricing cards:
+
+NOVYRA FREE
+
+- $0.
+- Basic functionality.
+- Start Free button.
+
+NOVYRA PRO
+
+- Configurable monthly price.
+- Configurable annual price.
+- Popular plan indicator.
+- Full premium feature list.
+- Upgrade to Pro button.
+
+NOVYRA BUSINESS
+
+- Configurable monthly price.
+- Configurable annual price.
+- Organization features.
+- Choose Business button.
+
+Include:
+
+- Monthly / Annual selector.
+- Annual savings when configured.
+- Feature comparison table.
+- Frequently asked questions.
+- Clear subscription terms.
+- Currency display.
+
+All displayed prices must come from the actual plan configuration.
+
+Do not display fake discounts.
+
+## 6.2 Payment integration
+
+Create a modular payment integration layer.
+
+The system should support a real payment provider through secure server-side integration.
+
+Use a supported payment provider appropriate for the merchant's country and business setup.
+
+Possible providers may include Stripe or an appropriate regional payment gateway.
+
+Do not assume merchant eligibility or availability without configuration.
+
+Required payment functionality:
+
+- Create checkout session.
+- Redirect to secure payment page.
+- Handle successful payment.
+- Handle failed payment.
+- Handle canceled payment.
+- Verify payment status on the server.
+- Process payment webhooks.
+- Handle subscription renewals.
+- Handle cancellations.
+- Handle failed renewals.
+- Handle refunds when supported.
+- Maintain payment history.
+
+IMPORTANT SECURITY RULES:
+
+- Never process raw card details in the application frontend.
+- Never store card numbers or CVV.
+- Never expose secret payment API keys.
+- Never activate Pro merely because the browser returns to a success URL.
+- Verify payment with the payment provider server-side.
+- Verify webhook signatures.
+- Prevent duplicate webhook processing.
+- Use idempotency for payment operations.
+- Keep subscription status synchronized with the payment provider.
+
+If payment credentials are unavailable:
+
+1. Build the payment integration architecture.
+2. Implement sandbox or test mode where supported.
+3. Display configuration-required status.
+4. Do not simulate a successful payment.
+5. Do not unlock paid features without verified entitlement.
+
+## 6.3 Subscription lifecycle
+
+Support:
+
+- Free subscription.
+- Pro monthly.
+- Pro yearly.
+- Business monthly.
+- Business yearly.
+- Trial where configured.
+- Active subscription.
+- Canceling subscription.
+- Canceled subscription.
+- Past-due subscription.
+- Payment failure.
+- Expired subscription.
+- Refunded payment where applicable.
+
+Define clear rules for entitlement changes.
+
+When a paid subscription expires or is canceled at the end of its billing period:
+
+- Update its entitlement according to verified provider status.
+- Preserve the user's account.
+- Preserve local and cloud data according to retention policy.
+- Downgrade paid-only features gracefully.
+- Never delete user data automatically because a subscription expired.
+
+## 6.4 User billing portal
+
+Create a dedicated Billing section.
+
+Users must be able to:
+
+- View current plan.
+- View subscription status.
+- View billing cycle.
+- View renewal date.
+- View payment history.
+- Upgrade plan.
+- Change billing period where supported.
+- Cancel subscription.
+- Resume subscription where supported.
+- Update payment method through the provider's secure portal.
+- View invoices.
+- View receipts.
+- Manage trial status.
+
+Use real billing data.
+
+---
+
+# 7. ACCOUNT DASHBOARD
+
+Create a dedicated authenticated account dashboard.
+
+Sections:
+
+## Overview
+
+- Welcome message.
+- Profile summary.
+- Current subscription.
+- Subscription status.
+- Remaining AI credits.
+- Registered devices.
+- Recent speed tests.
+- Account notifications.
+
+## My Subscription
+
+- Current plan.
+- Plan features.
+- Billing cycle.
+- Renewal date.
+- Upgrade options.
+- Cancellation status.
+
+## Billing History
+
+- Transactions.
+- Payment status.
+- Invoice links.
+- Receipt links.
+- Payment dates.
+
+## My Devices
+
+- Registered devices.
+- Device names.
+- Registration dates.
+- Last synchronization.
+- Device management.
+
+## Cloud Data
+
+- Backup status.
+- Last backup.
+- Sync status.
+- Restore options.
+
+## Security
+
+- Password changes.
+- Session management.
+- Account security.
+- Connected providers.
+- Account deletion.
+
+---
+
+# 8. ADVANCED PREMIUM FEATURES
+
+Implement the following premium product features.
+
+## 8.1 NOVYRA Network Score
+
+Create an intelligent network quality scoring system.
+
+Calculate a score from available measured metrics:
+
+- Download speed.
+- Upload speed.
+- Latency.
+- Jitter.
+- Packet loss.
+- Connection stability.
+
+Create separate assessments for:
+
+- General browsing.
+- Gaming.
+- Video conferencing.
+- HD streaming.
+- 4K streaming.
+- Large downloads.
+
+Use documented thresholds.
+
+Explain the reason behind each rating.
+
+Never base all quality assessments on download speed alone.
+
+## 8.2 ISP Performance Tracker
+
+Create a feature that tracks the performance of the user's internet provider over time.
+
+Include:
+
+- Recorded ISP name where available.
+- Historical download performance.
+- Historical upload performance.
+- Latency history.
+- Uptime.
+- Connection interruptions.
+- Monthly performance reports.
+
+Only use actual recorded measurements.
+
+Do not invent ISP performance benchmarks.
+
+## 8.3 Smart Troubleshooting
+
+Create an advanced diagnostic workflow.
+
+The system should:
+
+1. Collect available measurements.
+2. Identify abnormal values.
+3. Analyze possible causes.
+4. Explain the findings.
+5. Suggest troubleshooting actions.
+6. Allow users to rerun relevant tests.
+
+Examples:
+
+- High latency.
+- Unstable upload.
+- DNS resolution failure.
+- Intermittent connection.
+- Packet loss.
+- Low Wi-Fi signal.
+- Connection interruptions.
+
+Distinguish confirmed issues from possible causes.
+
+## 8.4 Connection Uptime Monitoring
+
+Support:
+
+- Connection status checks.
+- Outage detection.
+- Downtime duration.
+- Uptime percentage.
+- Outage history.
+- Recovery detection.
+- Configurable alerts.
+
+The monitoring agent must operate within the actual capabilities of the selected environment.
+
+## 8.5 Custom Alerts
+
+Allow users to create alert rules:
+
+- Download below a chosen threshold.
+- Upload below a chosen threshold.
+- Ping above a chosen threshold.
+- Packet loss above a chosen threshold.
+- Connection outage.
+- Device offline.
+- Monitoring service unavailable.
+
+Support:
+
+- In-app notifications.
+- Email notifications when configured.
+- Desktop notifications when supported.
+- Webhooks for Business users.
+
+## 8.6 Gaming Mode
+
+Create a premium gaming-focused dashboard.
+
+Include:
+
+- Connection latency.
+- Jitter.
+- Packet loss.
+- Stability score.
+- Historical gaming metrics.
+- Target server testing where supported.
+- Performance recommendations.
+
+Avoid claiming that NOVYRA Net can directly modify game network routes without a real implementation.
+
+## 8.7 Wi-Fi Intelligence
+
+Implement advanced Wi-Fi analysis using supported operating-system APIs or a desktop agent.
+
+Include:
+
+- Signal strength.
+- Available Wi-Fi information.
+- Channel information when available.
+- Connection details.
+- Network comparison.
+- Signal stability.
+
+Explain unavailable metrics.
+
+## 8.8 Bandwidth Intelligence
+
+Where system-level monitoring is supported:
+
+- Application network usage.
+- Upload and download consumption.
+- Usage over time.
+- Top applications by network usage.
+- Device traffic summaries.
+- Usage alerts.
+
+Protect user privacy and request necessary permissions.
+
+## 8.9 Cloud Monitoring Dashboard
+
+Create a web-accessible account dashboard for authorized users.
+
+Allow viewing:
+
+- Registered devices.
+- Last reported status.
+- Historical monitoring records.
+- Device connection health.
+- Recent alerts.
+- Available analytics.
+
+Use authenticated and authorized server-side data access.
+
+Do not claim live monitoring if the device is offline or its agent is not running.
+
+---
+
+# 9. ADMINISTRATION DASHBOARD
+
+This is a mandatory component of the commercial platform.
+
+Create a protected administrator area.
+
+Only authorized administrators may access it.
+
+Do not grant admin access based on a client-side role field or email comparison.
+
+Use server-verified role permissions.
+
+## 9.1 Admin overview
+
+Display:
+
+- Total registered users.
+- Free users.
+- Pro subscribers.
+- Business subscribers.
+- Active subscriptions.
+- Canceled subscriptions.
+- Monthly recurring revenue when reliable billing data is available.
+- Annual recurring revenue when reliable billing data is available.
+- Recent registrations.
+- Recent subscription changes.
+- Payment failures.
+- Support requests.
+
+Never invent analytics.
+
+## 9.2 User management
+
+Administrators can:
+
+- Search users.
+- View user profiles.
+- View account status.
+- View subscription status.
+- View registration date.
+- View authorized device count.
+- Suspend accounts when justified.
+- Restore accounts.
+- Review support history.
+
+Sensitive administrative actions must be logged.
+
+Do not allow administrators to view user passwords or payment card details.
+
+## 9.3 Plan management
+
+Administrators can configure:
+
+- Plan names.
+- Monthly prices.
+- Annual prices.
+- Currency.
+- Features.
+- Feature access.
+- AI quotas.
+- Device limits.
+- Organization limits.
+- Trial settings.
+- Plan visibility.
+
+Changes must be validated and audited.
+
+## 9.4 Subscription management
+
+Administrators can:
+
+- View subscriptions.
+- Search subscription records.
+- View payment status.
+- View renewal dates.
+- View cancellations.
+- View past-due accounts.
+- Review refunds when supported.
+- Review webhook synchronization status.
+
+Do not manually mark payments as successful without appropriate authorization and auditable verification.
+
+## 9.5 Feature management
+
+Create centralized feature flags.
+
+Allow administrators to enable or disable specific features for:
+
+- Free.
+- Pro.
+- Business.
+
+Implement entitlements on the server.
+
+The frontend should only display the appropriate feature state.
+
+Never rely exclusively on hiding a button to protect premium functionality.
+
+## 9.6 Coupons and promotions
+
+Where supported by the payment provider, implement:
+
+- Promotional codes.
+- Discount percentages.
+- Fixed discounts.
+- Expiration dates.
+- Usage limits.
+- Eligible plans.
+- Campaign activation and deactivation.
+
+Validate coupons on the server.
+
+## 9.7 System settings
+
+Include:
+
+- Payment provider configuration status.
+- Authentication configuration status.
+- AI provider status.
+- Email service status.
+- Database status.
+- Monitoring service status.
+- Webhook status.
+
+Never expose secrets in the admin interface.
+
+Display masked configuration status instead.
+
+## 9.8 Admin audit logs
+
+Record important administrative events:
+
+- User suspension.
+- Plan changes.
+- Entitlement changes.
+- Subscription actions.
+- Configuration changes.
+- Administrative login.
+- Sensitive data access.
+
+Include timestamps and actor identity.
+
+---
+
+# 10. NOVYRA AI NETWORK ADVISOR — PREMIUM INTEGRATION
+
+Upgrade the existing AI Advisor.
+
+Create a real AI-backed network assistant.
+
+Capabilities:
+
+- Analyze current test results.
+- Analyze historical measurements.
+- Explain performance issues.
+- Diagnose likely connection problems.
+- Explain technical concepts.
+- Recommend troubleshooting.
+- Generate reports.
+- Compare connection quality.
+- Answer gaming network questions.
+
+Create usage tiers:
+
+Free:
+Limited or unavailable AI access depending on configured plan settings.
+
+Pro:
+Configurable monthly AI allowance.
+
+Business:
+Configurable higher AI allowance and organization-level usage controls.
+
+Show:
+
+- Remaining usage.
+- Monthly reset date.
+- Usage history.
+- Upgrade prompt when allowance is exhausted.
+
+Implement usage accounting server-side.
+
+Prevent users from bypassing quotas by modifying frontend state.
+
+Never claim AI analysis has happened if the model request failed.
+
+---
+
+# 11. DATABASE AND BACKEND ARCHITECTURE
+
+Create a secure, maintainable backend.
+
+Preferred architecture where supported:
+
+Firebase Authentication.
+Cloud Firestore.
+Firebase Cloud Functions or another appropriate secure backend.
+
+Alternative backend technologies may be used if required by the existing project.
+
+Suggested collections or equivalent database entities:
+
+### users
+
+- id
+- fullName
+- email
+- profileImage
+- createdAt
+- emailVerified
+- accountStatus
+- role
+- preferredLanguage
+
+### subscriptions
+
+- id
+- userId
+- planId
+- status
+- billingInterval
+- provider
+- providerCustomerId
+- providerSubscriptionId
+- currentPeriodStart
+- currentPeriodEnd
+- cancelAtPeriodEnd
+- createdAt
+- updatedAt
+
+### payments
+
+- id
+- userId
+- subscriptionId
+- providerPaymentId
+- amount
+- currency
+- status
+- createdAt
+- invoiceUrl
+
+### plans
+
+- id
+- name
+- description
+- monthlyPrice
+- annualPrice
+- currency
+- features
+- limits
+- active
+
+### entitlements
+
+- id
+- userId
+- planId
+- features
+- limits
+- validFrom
+- validUntil
+- source
+- status
+
+### devices
+
+- id
+- userId
+- organizationId
+- deviceName
+- deviceType
+- registrationDate
+- lastSeenAt
+- status
+
+### testHistory
+
+- id
+- userId
+- deviceId
+- download
+- upload
+- ping
+- jitter
+- packetLoss
+- serverId
+- timestamp
+
+### monitoringRecords
+
+- id
+- userId
+- deviceId
+- metrics
+- connectionStatus
+- timestamp
+
+### alerts
+
+- id
+- userId
+- deviceId
+- alertType
+- threshold
+- status
+- createdAt
+
+### aiUsage
+
+- id
+- userId
+- planId
+- usageCount
+- periodStart
+- periodEnd
+
+### organizations
+
+- id
+- name
+- ownerId
+- planId
+- createdAt
+
+### organizationMembers
+
+- id
+- organizationId
+- userId
+- role
+- createdAt
+
+### supportTickets
+
+- id
+- userId
+- subject
+- message
+- status
+- priority
+- createdAt
+- updatedAt
+
+### auditLogs
+
+- id
+- actorId
+- action
+- target
+- timestamp
+- metadata
+
+Use proper database relationships and indexes.
+
+Do not store sensitive payment credentials in these collections.
+
+Use appropriate database security rules and server-side validation.
+
+---
+
+# 12. SUBSCRIPTION ENTITLEMENT ENGINE
+
+Implement one centralized entitlement service.
+
+Example functionality:
+
+- getCurrentPlan(userId)
+- getSubscriptionStatus(userId)
+- getUserEntitlements(userId)
+- canUseFeature(userId, featureId)
+- checkUsageLimit(userId, featureId)
+- consumeUsage(userId, featureId)
+- updateSubscriptionStatus(userId)
+- handleSubscriptionExpiration(userId)
+
+All important entitlement checks must be enforced server-side.
+
+Example:
+
+If a Free user attempts to access a Pro-only cloud monitoring feature:
+
+1. Validate their authenticated identity.
+2. Retrieve their verified subscription entitlement.
+3. Check whether the requested feature is available.
+4. Return an appropriate authorization response.
+5. Display an upgrade interface in the frontend.
+
+Do not use localStorage, frontend state, URL parameters, or editable JavaScript variables as proof of subscription.
+
+Do not trust subscription information supplied by the client.
+
+---
+
+# 13. PREMIUM UPGRADE EXPERIENCE
+
+Integrate subscription upgrades throughout the existing application.
+
+Where a premium feature is visible to Free users, provide a clear explanation.
+
+Create a reusable Premium Feature Lock component.
+
+Include:
+
+- Feature name.
+- Short explanation.
+- Premium badge.
+- Benefits.
+- Upgrade to Pro button.
+- Business upgrade option where relevant.
+
+Do not overwhelm the dashboard with advertisements.
+
+Use contextual upgrade prompts.
+
+Create a complete Upgrade Modal.
+
+Display:
+
+- Current plan.
+- Target plan.
+- Included features.
+- Monthly and annual pricing.
+- Billing details.
+- Continue to checkout button.
+
+The user must know what they are purchasing.
+
+---
+
+# 14. NOTIFICATION SYSTEM
+
+Create a unified notification system.
+
+Notifications may include:
+
+- Successful registration.
+- Email verification.
+- Subscription activation.
+- Payment failure.
+- Subscription renewal.
+- Subscription cancellation.
+- Trial expiration.
+- AI usage limit.
+- Network outage.
+- Low internet speed.
+- High latency.
+- Device offline.
+- Cloud backup completion.
+
+Support:
+
+- In-app notifications.
+- Email notifications when configured.
+- Desktop notifications when supported.
+
+Allow users to manage notification preferences.
+
+Do not send duplicate notifications unnecessarily.
+
+---
+
+# 15. CLOUD SYNCHRONIZATION AND BACKUPS
+
+For authenticated users, implement secure cloud synchronization.
+
+Features:
+
+- Cloud test history.
+- User preferences.
+- Registered devices.
+- Monitoring records.
+- Account-level configuration.
+- Data backup.
+- Restore functionality.
+
+Use clear sync states:
+
+- Synced.
+- Syncing.
+- Offline.
+- Sync failed.
+- Backup unavailable.
+
+Implement safe conflict handling.
+
+Do not overwrite newer data silently.
+
+Users should be able to retain local history even when cloud services are unavailable.
+
+Apply appropriate data retention policies.
+
+---
+
+# 16. SECURITY AND PRIVACY
+
+Implement security as a core product requirement.
+
+Authentication:
+
+- Secure authentication provider.
+- Password reset verification.
+- Email verification.
+- Secure sessions.
+- Protected routes.
+- Rate limiting where supported.
+
+Authorization:
+
+- Server-side entitlement validation.
+- Server-side admin permissions.
+- Organization-level access checks.
+- Device ownership verification.
+- Subscription ownership verification.
+
+Payments:
+
+- Secure provider-hosted checkout.
+- Server-side payment verification.
+- Webhook signature verification.
+- Idempotency.
+- No raw card storage.
+
+Database:
+
+- Least-privilege access.
+- Secure database rules.
+- Server-side validation.
+- Protection against unauthorized data access.
+
+Application:
+
+- Validate inputs.
+- Prevent unsafe HTML injection.
+- Protect against XSS.
+- Protect backend APIs.
+- Secure file uploads.
+- Limit request sizes.
+- Apply rate limits.
+- Use HTTPS.
+- Keep API keys in secure environment variables.
+- Do not expose privileged configuration in frontend bundles.
+
+Privacy:
+
+- Do not collect unnecessary personal information.
+- Do not transmit network data to third parties without a legitimate disclosed purpose.
+- Provide account deletion.
+- Provide privacy controls.
+- Clearly explain monitoring permissions.
+- Obtain appropriate user consent for device monitoring.
+
+Never claim that a security feature is implemented unless it actually is.
+
+---
+
+# 17. UI/UX DESIGN REQUIREMENTS
+
+Preserve the existing NOVYRA Net visual identity.
+
+Improve it consistently across all new modules.
+
+Visual style:
+
+- Premium dark-first interface.
+- Deep navy backgrounds.
+- Electric blue.
+- Cyan.
+- Purple accents.
+- Clean cards.
+- Refined typography.
+- Subtle animation.
+- Professional charts.
+- Consistent iconography.
+
+New pages must follow the existing design system.
+
+Create these new screens:
+
+1. Landing Page.
+2. Login.
+3. Registration.
+4. Forgot Password.
+5. Email Verification.
+6. Pricing.
+7. Checkout Redirect State.
+8. Payment Success.
+9. Payment Failure.
+10. Account Dashboard.
+11. Profile Settings.
+12. Subscription Management.
+13. Billing History.
+14. Device Management.
+15. Cloud Backup.
+16. Support Center.
+17. Admin Dashboard.
+18. Admin Users.
+19. Admin Plans.
+20. Admin Subscriptions.
+21. Admin Payments.
+22. Admin Feature Flags.
+23. Admin System Settings.
+24. Admin Audit Logs.
+
+Ensure all new screens support:
+
+- Arabic.
+- English.
+- RTL.
+- LTR.
+- Dark mode.
+- Light mode.
+- Responsive layouts.
+
+Maintain a consistent professional NOVYRA appearance.
+
+---
+
+# 18. PUBLIC WEBSITE AND LEGAL PAGES
+
+Create professional public-facing pages.
+
+Include:
+
+- Home.
+- Features.
+- Pricing.
+- About NOVYRA Net.
+- Contact.
+- Help Center.
+- Frequently Asked Questions.
+- Terms of Service.
+- Privacy Policy.
+- Subscription and Cancellation Policy.
+- Refund Policy.
+
+Create editable legal-page templates.
+
+Do not invent company registration details, legal addresses, or regulatory certifications.
+
+Mark business-specific legal details as configuration-required.
+
+Clearly explain:
+
+- Subscription billing.
+- Renewal.
+- Cancellation.
+- Trial conditions.
+- Refund conditions.
+- Data processing.
+- Network monitoring permissions.
+
+---
+
+# 19. BUSINESS ORGANIZATIONS
+
+Implement a proper Business account architecture.
+
+Features:
+
+- Organization creation.
+- Organization profile.
+- Member invitations.
+- Team roles.
+- Device registration.
+- Device assignment.
+- Organization monitoring dashboard.
+- Organization analytics.
+- Centralized alerts.
+- Team activity logs.
+
+Important:
+
+Users must not be able to access another organization's devices or data.
+
+Enforce authorization on the backend.
+
+Support organization ownership and safe ownership transfer where appropriate.
+
+---
+
+# 20. TECHNICAL INTEGRATION REQUIREMENTS
+
+Before integrating external services, inspect the current environment.
+
+Identify what is already configured.
+
+Potential integrations:
+
+### Authentication
+
+- Firebase Authentication or equivalent.
+- Google OAuth when credentials are available.
+- Email/password authentication.
+
+### Database
+
+- Firestore or an equivalent secure database.
+
+### AI
+
+- Configured AI model provider.
+- Secure server-side AI requests.
+- Usage quota accounting.
+
+### Payments
+
+- Configurable payment gateway.
+- Secure checkout.
+- Webhooks.
+- Subscription synchronization.
+
+### Email
+
+- Email verification.
+- Password recovery.
+- Subscription notifications.
+- Alerts.
+
+### Network Services
+
+- Speed test endpoints.
+- DNS services.
+- Monitoring backend.
+- Desktop monitoring agent.
+
+Do not assume credentials exist.
+
+Create clear integration adapters and environment configuration.
+
+If credentials are missing, explain exactly which environment variables or provider settings are needed.
+
+Never replace a missing external service with fake success responses.
+
+---
+
+# 21. CONFIGURATION AND ENVIRONMENT VARIABLES
+
+Create a clear environment configuration structure.
+
+Examples of required configuration categories:
+
+- Authentication provider settings.
+- Database configuration.
+- Payment provider public configuration.
+- Payment provider secret keys.
+- Webhook secrets.
+- AI provider credentials.
+- Email service credentials.
+- Monitoring API configuration.
+- Application base URL.
+
+Use environment variables and secure backend secret storage.
+
+Separate public configuration from private secrets.
+
+Never commit production secrets to source code.
+
+Provide an environment example file containing placeholder names only.
+
+---
+
+# 22. PERFORMANCE AND SCALABILITY
+
+The application must be designed for growth.
+
+Requirements:
+
+- Efficient database queries.
+- Proper pagination.
+- Indexed database collections.
+- Efficient history loading.
+- Reusable components.
+- Lazy loading where appropriate.
+- Optimized charts.
+- Request cancellation.
+- Rate limiting.
+- Caching where suitable.
+- Controlled AI usage.
+- Controlled network test usage.
+- Background jobs where supported.
+- Efficient cloud synchronization.
+
+Do not load all users, payments, or monitoring records into the browser.
+
+Admin tables should use server-side pagination.
+
+---
+
+# 23. QUALITY ASSURANCE AND TESTING
+
+Perform a full regression test of the existing project and all new features.
+
+## Authentication tests
+
+- Register a new account.
+- Verify email.
+- Log in.
+- Log out.
+- Recover password.
+- Test invalid credentials.
+- Test duplicate registration.
+- Test protected pages.
+
+## Subscription tests
+
+- Free plan access.
+- Pro entitlement.
+- Business entitlement.
+- Expired subscription.
+- Canceled subscription.
+- Failed payment.
+- Successful verified payment in test mode.
+- Webhook processing.
+- Duplicate webhook handling.
+- Downgrade behavior.
+
+## Security tests
+
+- Unauthorized admin access.
+- Unauthorized premium access.
+- Access to another user's records.
+- Access to another organization's data.
+- Client-side entitlement manipulation.
+- Invalid API requests.
+- Rate-limit behavior.
+
+## User dashboard tests
+
+- Profile update.
+- Subscription display.
+- Billing history.
+- Device management.
+- Cloud backup.
+- Notifications.
+
+## Network tests
+
+- Existing speed tests.
+- Download.
+- Upload.
+- Ping.
+- Jitter.
+- DNS.
+- Network monitoring.
+- Connection interruptions.
+- Historical records.
+
+## Admin tests
+
+- Admin authentication.
+- User management.
+- Plan configuration.
+- Feature flags.
+- Subscription records.
+- Audit logs.
+- Permission restrictions.
+
+## UI tests
+
+- Arabic.
+- English.
+- RTL.
+- LTR.
+- Dark mode.
+- Light mode.
+- Desktop responsiveness.
+- Narrow screen responsiveness.
+- Modal behavior.
+- Form validation.
+- Navigation.
+
+Run available:
+
+- TypeScript checks.
+- Production build.
+- Unit tests.
+- Integration tests.
+- Browser tests where supported.
+
+Fix errors before completion.
+
+Do not claim tests passed unless actually executed.
+
+---
+
+# 24. IMPLEMENTATION PRIORITY
+
+Implement the upgrade in the following sequence.
+
+### Phase 1 — Inspect and Preserve
+
+- Inspect existing project.
+- Identify existing functionality.
+- Fix blocking issues.
+- Preserve current dashboard.
+- Prepare safe migrations.
+
+### Phase 2 — Authentication
+
+- Registration.
+- Login.
+- Google sign-in.
+- Password recovery.
+- Email verification.
+- User profile.
+- Protected routes.
+
+### Phase 3 — Backend and Data
+
+- Database.
+- User records.
+- Subscription records.
+- Plan configuration.
+- Secure authorization.
+- Entitlement engine.
+
+### Phase 4 — Pricing and Subscriptions
+
+- Pricing page.
+- Plan comparison.
+- Checkout integration.
+- Subscription lifecycle.
+- Billing portal.
+- Payment history.
+
+### Phase 5 — Premium Features
+
+- Advanced analytics.
+- Unlimited history.
+- Gaming Mode.
+- AI Pro.
+- Advanced monitoring.
+- Wi-Fi Intelligence.
+- Bandwidth Intelligence.
+- Reports.
+- Custom alerts.
+
+### Phase 6 — Cloud and Devices
+
+- Cloud backup.
+- Multi-device accounts.
+- Device management.
+- Synchronization.
+- Business monitoring architecture.
+
+### Phase 7 — Admin Dashboard
+
+- User management.
+- Subscription management.
+- Plan management.
+- Feature flags.
+- Payments.
+- Audit logs.
+- System configuration.
+
+### Phase 8 — Final Integration
+
+- Notifications.
+- Legal pages.
+- Support.
+- Localization.
+- Responsive design.
+- Security review.
+- Performance optimization.
+
+### Phase 9 — Regression and Final Verification
+
+Test all existing and new features together.
+
+Do not stop after implementing the first phase.
+
+Continue through all phases to the extent supported by the environment.
+
+---
+
+# 25. IMPORTANT DEVELOPMENT RULES
+
+These requirements are mandatory:
+
+1. Continue the existing NOVYRA Net project.
+2. Never delete existing working features unnecessarily.
+3. Do not build static mockups instead of working pages.
+4. Do not create fake authentication.
+5. Do not simulate successful payments.
+6. Do not unlock Pro based on client-side variables.
+7. Do not invent network measurements.
+8. Do not display fake subscriptions.
+9. Do not fabricate billing history.
+10. Do not claim cloud monitoring is active when it is not.
+11. Do not expose API secrets.
+12. Do not create nonfunctional buttons.
+13. Do not leave incomplete forms.
+14. Do not break Arabic or English layouts.
+15. Do not remove existing user data.
+16. Do not introduce unnecessary dependencies.
+17. Do not claim successful testing without execution.
+18. Clearly document integrations that require external configuration.
+
+If a feature cannot be completed because an external credential, provider account, backend service, or operating-system integration is missing:
+
+- Implement the supported architecture.
+- Implement the frontend workflow.
+- Clearly indicate what configuration is missing.
+- Provide exact setup instructions.
+- Do not fake successful operation.
+
+Make sensible engineering decisions without repeatedly asking the user to approve ordinary implementation details.
+
+---
+
+# 26. FINAL DELIVERABLE
+
+Deliver the upgraded, working NOVYRA Net project.
+
+The final application must contain:
+
+1. Existing NOVYRA Net functionality preserved.
+2. Professional landing page.
+3. Complete authentication system.
+4. Registration and login.
+5. Google sign-in where configured.
+6. Password recovery.
+7. User account dashboard.
+8. Free subscription plan.
+9. Pro subscription plan.
+10. Business subscription plan.
+11. Monthly

@@ -1,0 +1,499 @@
+{
+  "entities": {
+    "AdminRegistry": {
+      "title": "AdminRegistry",
+      "description": "Explicit admin UID allowlist document.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "grantedAt": { "type": "string", "format": "date-time" },
+        "grantedBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["uid", "grantedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Publicly-scoped non-PII account profile summary.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "photoUrl": { "type": "string", "maxLength": 512 },
+        "language": { "type": "string", "enum": ["en", "ar"] },
+        "accountStatus": { "type": "string", "enum": ["active", "suspended"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "accountStatus", "createdAt", "updatedAt"]
+    },
+    "UserPrivateInfo": {
+      "title": "UserPrivateInfo",
+      "description": "Strictly isolated PII document stored under /users/{userId}/private/info.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "email": { "type": "string", "format": "email", "maxLength": 200 },
+        "country": { "type": "string", "maxLength": 80 },
+        "acceptedTermsAt": { "type": "string", "format": "date-time" },
+        "marketingOptIn": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "createdAt", "updatedAt"]
+    },
+    "SubscriptionPlan": {
+      "title": "SubscriptionPlan",
+      "description": "Catalog definition for Free, Pro, and Business plans.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "enum": ["free", "pro", "business"] },
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "nameAr": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "taglineAr": { "type": "string", "maxLength": 200 },
+        "monthlyPriceCents": { "type": "number" },
+        "annualPriceCents": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "pricingConfigured": { "type": "boolean" },
+        "active": { "type": "boolean" },
+        "maxHistoryRecords": { "type": "number" },
+        "maxSavedDevices": { "type": "number" },
+        "maxAiRequestsPerDay": { "type": "number" },
+        "maxOrgMembers": { "type": "number" },
+        "cloudSyncEnabled": { "type": "boolean" },
+        "analyticsEnabled": { "type": "boolean" },
+        "gamingModeEnabled": { "type": "boolean" },
+        "alertsEnabled": { "type": "boolean" },
+        "exportEnabled": { "type": "boolean" },
+        "teamManagementEnabled": { "type": "boolean" },
+        "features": { "type": "array", "maxLength": 20 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "name",
+        "nameAr",
+        "monthlyPriceCents",
+        "annualPriceCents",
+        "currency",
+        "pricingConfigured",
+        "active",
+        "maxHistoryRecords",
+        "maxSavedDevices",
+        "maxAiRequestsPerDay",
+        "maxOrgMembers",
+        "cloudSyncEnabled",
+        "analyticsEnabled",
+        "gamingModeEnabled",
+        "alertsEnabled",
+        "exportEnabled",
+        "teamManagementEnabled",
+        "updatedAt"
+      ]
+    },
+    "FeatureFlag": {
+      "title": "FeatureFlag",
+      "description": "Global platform feature toggle managed by admins.",
+      "type": "object",
+      "properties": {
+        "key": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "enabled": { "type": "boolean" },
+        "requiredPlan": { "type": "string", "enum": ["free", "pro", "business"] },
+        "description": { "type": "string", "maxLength": 300 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["key", "enabled", "requiredPlan", "updatedAt"]
+    },
+    "CouponCode": {
+      "title": "CouponCode",
+      "description": "Promotional discount coupon managed by admins.",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "discountPercent": { "type": "number" },
+        "applicablePlan": { "type": "string", "enum": ["all", "pro", "business"] },
+        "active": { "type": "boolean" },
+        "maxUses": { "type": "number" },
+        "usedCount": { "type": "number" },
+        "expiresAt": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "discountPercent", "applicablePlan", "active", "maxUses", "usedCount", "createdAt", "updatedAt"]
+    },
+    "UserSubscription": {
+      "title": "UserSubscription",
+      "description": "User subscription state controlled only by verified admin or billing integration.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "planId": { "type": "string", "enum": ["free", "pro", "business"] },
+        "billingCycle": { "type": "string", "enum": ["monthly", "annual", "none"] },
+        "status": { "type": "string", "enum": ["active", "trialing", "past_due", "canceled", "incomplete", "none"] },
+        "provider": { "type": "string", "maxLength": 40 },
+        "providerSubscriptionId": { "type": "string", "maxLength": 160 },
+        "providerCustomerId": { "type": "string", "maxLength": 160 },
+        "cancelAtPeriodEnd": { "type": "boolean" },
+        "currentPeriodEnd": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "planId", "billingCycle", "status", "provider", "cancelAtPeriodEnd", "createdAt", "updatedAt"]
+    },
+    "PaymentRecord": {
+      "title": "PaymentRecord",
+      "description": "Recorded billing transaction or invoice reference.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "planId": { "type": "string", "enum": ["free", "pro", "business"] },
+        "amountCents": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 10 },
+        "status": { "type": "string", "enum": ["paid", "pending", "failed", "refunded"] },
+        "provider": { "type": "string", "maxLength": 40 },
+        "providerSessionId": { "type": "string", "maxLength": 200 },
+        "invoiceUrl": { "type": "string", "maxLength": 512 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "planId", "amountCents", "currency", "status", "provider", "createdAt"]
+    },
+    "UserEntitlement": {
+      "title": "UserEntitlement",
+      "description": "Resolved account entitlements stored per user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "planId": { "type": "string", "enum": ["free", "pro", "business"] },
+        "status": { "type": "string", "enum": ["active", "suspended", "canceled"] },
+        "aiDailyLimit": { "type": "number" },
+        "maxHistoryRecords": { "type": "number" },
+        "maxSavedDevices": { "type": "number" },
+        "cloudSyncEnabled": { "type": "boolean" },
+        "analyticsEnabled": { "type": "boolean" },
+        "gamingModeEnabled": { "type": "boolean" },
+        "alertsEnabled": { "type": "boolean" },
+        "teamManagementEnabled": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "userId",
+        "planId",
+        "status",
+        "aiDailyLimit",
+        "maxHistoryRecords",
+        "maxSavedDevices",
+        "cloudSyncEnabled",
+        "analyticsEnabled",
+        "gamingModeEnabled",
+        "alertsEnabled",
+        "teamManagementEnabled",
+        "updatedAt"
+      ]
+    },
+    "UserDevice": {
+      "title": "UserDevice",
+      "description": "Device registered by an authenticated user for monitoring and history attribution.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "deviceType": { "type": "string", "enum": ["desktop", "laptop", "mobile", "router", "other"] },
+        "browserLabel": { "type": "string", "maxLength": 120 },
+        "isp": { "type": "string", "maxLength": 120 },
+        "connectionType": { "type": "string", "maxLength": 40 },
+        "lastSeenAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "deviceType", "createdAt", "updatedAt"]
+    },
+    "CloudTestRecord": {
+      "title": "CloudTestRecord",
+      "description": "Cloud-synced speed test measurement belonging to a user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 64 },
+        "downloadMbps": { "type": "number" },
+        "uploadMbps": { "type": "number" },
+        "pingMs": { "type": "number" },
+        "minPingMs": { "type": "number" },
+        "maxPingMs": { "type": "number" },
+        "jitterMs": { "type": "number" },
+        "probeLossPercent": { "type": "number" },
+        "serverId": { "type": "string", "maxLength": 80 },
+        "serverName": { "type": "string", "maxLength": 120 },
+        "serverLocation": { "type": "string", "maxLength": 120 },
+        "connectionType": { "type": "string", "maxLength": 40 },
+        "effectiveType": { "type": "string", "maxLength": 40 },
+        "publicIp": { "type": "string", "maxLength": 64 },
+        "isp": { "type": "string", "maxLength": 120 },
+        "status": { "type": "string", "enum": ["completed", "partial", "cancelled", "failed"] },
+        "durationSec": { "type": "number" },
+        "bytesTransferred": { "type": "number" },
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "userId",
+        "timestamp",
+        "downloadMbps",
+        "uploadMbps",
+        "pingMs",
+        "jitterMs",
+        "serverId",
+        "serverName",
+        "status",
+        "durationSec",
+        "bytesTransferred",
+        "createdAt"
+      ]
+    },
+    "MonitoringSnapshot": {
+      "title": "MonitoringSnapshot",
+      "description": "Aggregated live probe stability snapshot saved by a user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "avgLatencyMs": { "type": "number" },
+        "minLatencyMs": { "type": "number" },
+        "maxLatencyMs": { "type": "number" },
+        "interruptions": { "type": "number" },
+        "onlinePercent": { "type": "number" },
+        "sampleCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "avgLatencyMs", "interruptions", "onlinePercent", "sampleCount", "createdAt"]
+    },
+    "AlertRule": {
+      "title": "AlertRule",
+      "description": "Custom threshold notification rule configured by a user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "metric": { "type": "string", "enum": ["download_mbps", "upload_mbps", "ping_ms", "jitter_ms", "packet_loss"] },
+        "operator": { "type": "string", "enum": ["lt", "gt"] },
+        "threshold": { "type": "number" },
+        "enabled": { "type": "boolean" },
+        "channel": { "type": "string", "enum": ["in_app", "browser"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "metric", "operator", "threshold", "enabled", "channel", "createdAt", "updatedAt"]
+    },
+    "AiUsageRecord": {
+      "title": "AiUsageRecord",
+      "description": "Daily AI usage counter per user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "dateKey": { "type": "string", "minLength": 8, "maxLength": 16 },
+        "usedCount": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "dateKey", "usedCount", "updatedAt"]
+    },
+    "Organization": {
+      "title": "Organization",
+      "description": "Business workspace entity.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "name": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "planId": { "type": "string", "enum": ["business"] },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "maxSeats": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "ownerId", "planId", "status", "maxSeats", "createdAt", "updatedAt"]
+    },
+    "OrganizationMember": {
+      "title": "OrganizationMember",
+      "description": "Member belonging to a Business organization.",
+      "type": "object",
+      "properties": {
+        "orgId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "orgOwnerId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "role": { "type": "string", "enum": ["owner", "admin", "manager", "viewer"] },
+        "status": { "type": "string", "enum": ["active", "invited", "revoked"] },
+        "addedBy": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orgId", "orgOwnerId", "userId", "displayName", "role", "status", "addedBy", "createdAt", "updatedAt"]
+    },
+    "OrganizationDevice": {
+      "title": "OrganizationDevice",
+      "description": "Authorized device tracked inside a Business organization.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "orgId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "orgOwnerId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "location": { "type": "string", "maxLength": 120 },
+        "registeredBy": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "status": { "type": "string", "enum": ["online", "offline", "degraded"] },
+        "lastDownloadMbps": { "type": "number" },
+        "lastPingMs": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "orgId", "orgOwnerId", "name", "registeredBy", "status", "createdAt", "updatedAt"]
+    },
+    "OrganizationActivityLog": {
+      "title": "OrganizationActivityLog",
+      "description": "Audit log inside an organization.",
+      "type": "object",
+      "properties": {
+        "orgId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "orgOwnerId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "actorId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "action": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "target": { "type": "string", "maxLength": 120 },
+        "details": { "type": "string", "maxLength": 400 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orgId", "orgOwnerId", "actorId", "action", "createdAt"]
+    },
+    "SupportTicket": {
+      "title": "SupportTicket",
+      "description": "Customer support request submitted by a verified user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "subject": { "type": "string", "minLength": 3, "maxLength": 140 },
+        "category": { "type": "string", "enum": ["technical", "billing", "account", "business", "bug"] },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "status": { "type": "string", "enum": ["open", "in_progress", "resolved", "closed"] },
+        "message": { "type": "string", "minLength": 5, "maxLength": 3000 },
+        "adminResponse": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "subject", "category", "priority", "status", "message", "createdAt", "updatedAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable admin audit log entry.",
+      "type": "object",
+      "properties": {
+        "actorId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "actorEmail": { "type": "string", "maxLength": 200 },
+        "action": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "targetType": { "type": "string", "maxLength": 60 },
+        "targetId": { "type": "string", "maxLength": 128 },
+        "summary": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["actorId", "action", "targetType", "targetId", "summary", "createdAt"]
+    },
+    "HealthCheckDoc": {
+      "title": "HealthCheckDoc",
+      "description": "Read-only connection check sentinel document.",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "maxLength": 32 }
+      },
+      "required": ["status"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRegistry" },
+      "description": "Explicit admin UID registry."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Non-PII user account profile documents."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivateInfo" },
+      "description": "Strictly owner/admin-only isolated PII documents."
+    },
+    "/plans/{planId}": {
+      "schema": { "$ref": "#/entities/SubscriptionPlan" },
+      "description": "Catalog of subscription plans (free, pro, business)."
+    },
+    "/featureFlags/{flagId}": {
+      "schema": { "$ref": "#/entities/FeatureFlag" },
+      "description": "Admin-managed feature flags."
+    },
+    "/coupons/{couponId}": {
+      "schema": { "$ref": "#/entities/CouponCode" },
+      "description": "Admin-managed coupon codes."
+    },
+    "/users/{userId}/subscriptions/{subscriptionId}": {
+      "schema": { "$ref": "#/entities/UserSubscription" },
+      "description": "User subscription records (read by owner/admin, write only by admin)."
+    },
+    "/users/{userId}/payments/{paymentId}": {
+      "schema": { "$ref": "#/entities/PaymentRecord" },
+      "description": "User payment & invoice records (read by owner/admin, write only by admin)."
+    },
+    "/users/{userId}/entitlements/{entitlementId}": {
+      "schema": { "$ref": "#/entities/UserEntitlement" },
+      "description": "Resolved account entitlements (read by owner/admin, write only by admin)."
+    },
+    "/users/{userId}/devices/{deviceId}": {
+      "schema": { "$ref": "#/entities/UserDevice" },
+      "description": "Devices registered to a user account."
+    },
+    "/users/{userId}/testHistory/{testId}": {
+      "schema": { "$ref": "#/entities/CloudTestRecord" },
+      "description": "Cloud-synced speed test records owned by user."
+    },
+    "/users/{userId}/monitoringRecords/{recordId}": {
+      "schema": { "$ref": "#/entities/MonitoringSnapshot" },
+      "description": "Cloud-synced live monitoring stability snapshots."
+    },
+    "/users/{userId}/alerts/{alertId}": {
+      "schema": { "$ref": "#/entities/AlertRule" },
+      "description": "User-defined alert threshold rules."
+    },
+    "/users/{userId}/aiUsage/{periodId}": {
+      "schema": { "$ref": "#/entities/AiUsageRecord" },
+      "description": "Daily AI Advisor quota tracking per user."
+    },
+    "/organizations/{orgId}": {
+      "schema": { "$ref": "#/entities/Organization" },
+      "description": "Business workspace organizations."
+    },
+    "/organizations/{orgId}/members/{memberId}": {
+      "schema": { "$ref": "#/entities/OrganizationMember" },
+      "description": "Organization members subcollection with roles."
+    },
+    "/organizations/{orgId}/devices/{deviceId}": {
+      "schema": { "$ref": "#/entities/OrganizationDevice" },
+      "description": "Devices tracked within an organization."
+    },
+    "/organizations/{orgId}/activityLogs/{logId}": {
+      "schema": { "$ref": "#/entities/OrganizationActivityLog" },
+      "description": "Immutable organization activity logs."
+    },
+    "/supportTickets/{ticketId}": {
+      "schema": { "$ref": "#/entities/SupportTicket" },
+      "description": "Customer support tickets."
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Immutable admin audit log trail."
+    },
+    "/test/connection": {
+      "schema": { "$ref": "#/entities/HealthCheckDoc" },
+      "description": "Connection probe sentinel document."
+    }
+  }
+}

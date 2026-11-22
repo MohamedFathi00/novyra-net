@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NOVYRA Net</title>
+<style>
+:root{color-scheme:dark;--bg:#080a24;--card:#0d1033;--line:#262a6b;--tx:#eef0ff;--mut:#9aa0d6;--cy:#18c8ff;--pu:#a855f7;--gr:#22e06b;--bl:#4f46e5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html,body{background:var(--bg);color:var(--tx);font-family:"Segoe UI","Noto Sans Arabic",Tahoma,Arial,sans-serif}
+body{background:radial-gradient(1200px 600px at 20% 0,#1a1a6e55,transparent),var(--bg);min-height:100vh;padding:12px}
+.app{max-width:1500px;margin:auto;border:1px solid var(--line);border-radius:18px;padding:14px;background:linear-gradient(160deg,#0c0e3a,#070920);box-shadow:0 0 40px #4f46e522}
+.card{background:linear-gradient(180deg,#10134a99,#0a0c2b);border:1px solid var(--line);border-radius:16px;padding:14px;position:relative}
+.rtl{direction:rtl}
+header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:10px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px}
+.logo b{font-size:36px;letter-spacing:1px}.logo b i{color:var(--cy);font-style:normal}
+.logo small{display:block;color:#cfd3ff;font-size:15px}
+.mark{width:52px;height:52px;flex:none}
+.top{display:flex;gap:16px;align-items:center;color:#cfd3ff;font-size:14px;direction:rtl}
+.top span{display:flex;gap:6px;align-items:center}
+.slogan{display:block;text-align:right;margin-top:14px;font-size:17px;border-bottom:2px solid var(--pu);padding-bottom:4px;direction:rtl}
+.layout{display:grid;grid-template-columns:210px 1fr;gap:14px}
+aside{display:flex;flex-direction:column;gap:6px;direction:rtl}
+.nav{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;color:#cfd3ff;font-size:16px;cursor:pointer}
+.nav:hover{background:#1b1e6a55}
+.nav.on{background:linear-gradient(90deg,#5b3df5,#3a2fc0);color:#fff;border:1px solid #7a6bff}
+.nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6}
+hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+.sbl{margin-top:auto;text-align:center;padding-top:40px}
+.sbl b{display:block;letter-spacing:3px;font-size:20px}.sbl small{color:var(--mut);font-size:11px}
+.main{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;min-width:0}
+.speed{grid-column:1;grid-row:1;display:grid;grid-template-columns:1fr 1.5fr 1fr;grid-template-rows:auto auto;gap:12px}
+.speed .hd{grid-column:1/4;display:flex;justify-content:space-between;align-items:center;direction:rtl}
+.hd h3{font-size:20px;display:flex;gap:10px;align-items:center}
+.sel{border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-size:14px;display:flex;gap:8px;align-items:center;background:#0b0e3a;direction:rtl}
+.bars{display:inline-flex;gap:2px;align-items:flex-end;margin-inline-end:8px}.bars i{width:4px;background:var(--gr);display:block}
+.mini{text-align:center;border:1px solid var(--line);border-radius:14px;padding:16px 10px 6px;background:#0a0d33}
+.mini .ar{font-size:30px;line-height:1}
+.mini p{font-size:15px;margin:8px 0 4px}
+.mini h2{font-size:42px;font-weight:700}
+.mini small{font-size:16px;color:#dfe2ff}
+.mini svg{width:100%;height:60px;margin-top:6px}
+.gauge{text-align:center;position:relative}
+.gauge svg{width:100%;max-width:420px}
+.btn{margin:-6px auto 0;display:flex;align-items:center;justify-content:center;gap:10px;width:230px;padding:14px 20px;border-radius:12px;border:0;background:linear-gradient(90deg,#22c1ff,#6a5cff);font:inherit;font-size:17px;font-weight:700;letter-spacing:.3px;box-shadow:0 6px 24px #22c1ff44;cursor:pointer;color:#fff;direction:ltr}.btn svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linejoin:round}.btn:hover{filter:brightness(1.1)}.btn.busy{opacity:.85;cursor:progress}.btn.busy svg{animation:sp 1s linear infinite}@keyframes sp{50%{opacity:.3}}
+.stats{grid-column:1/4;display:flex;justify-content:space-around;align-items:center;padding-top:8px;border-top:1px solid #20246a}
+.stat{display:flex;gap:12px;align-items:center;font-size:15px}
+.stat b{font-size:20px;font-weight:600}.stat span{color:#dfe2ff;font-size:14px;display:block}
+.stat svg{width:34px;height:34px;stroke:var(--cy);fill:none;stroke-width:2}
+.right{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:14px}
+.info h3,.ai h3,.mon h3,.his h3,.tl h3{font-size:18px;display:flex;gap:10px;align-items:center;direction:rtl}
+.info .top2{display:flex;justify-content:space-between;align-items:center;direction:rtl}
+.on-l{color:var(--gr);font-size:13px;display:flex;gap:6px;align-items:center;direction:rtl}.dot{width:9px;height:9px;border-radius:50%;background:var(--gr);box-shadow:0 0 8px var(--gr)}
+.wifi{display:flex;align-items:center;gap:14px;padding:10px;border:1px solid var(--line);border-radius:12px;margin:10px 0;direction:rtl}
+.wifi svg{width:56px;height:46px;stroke:var(--cy);fill:none;stroke-width:5;stroke-linecap:round}
+.wifi b{font-size:17px;display:block}.wifi small{color:var(--mut)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:9px 4px;border-bottom:1px solid #1d2160;font-size:15px;direction:rtl}
+.row span:last-child{display:flex;gap:10px;align-items:center;direction:ltr}
+.cp{width:18px;height:18px;border:2px solid #cfd3ff;border-radius:4px;display:inline-block}
+.q{display:flex;align-items:center;gap:10px;direction:rtl;padding-top:10px}
+.pb{flex:1;height:8px;background:#222866;border-radius:6px;overflow:hidden;direction:ltr}.pb i{display:block;height:100%;width:98%;background:linear-gradient(90deg,#16c45a,#2be57a)}
+.ai{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#2a1d8f,#150f55);border-color:#5b3df5;direction:rtl}
+.ai .bot{width:110px;flex:none;text-align:center}
+.ai .tx{flex:1}
+.ai .h{display:flex;justify-content:space-between;align-items:center}
+.tag{background:var(--bl);padding:2px 10px;border-radius:8px;font-size:13px;font-weight:700}
+.ai p{font-size:14px;color:#dfe2ff;line-height:1.6;margin:6px 0 10px}
+.ok{display:flex;gap:8px;align-items:center;font-size:19px;font-weight:700;margin-top:8px}
+.chk{width:22px;height:22px;border-radius:50%;background:var(--gr);color:#041;display:inline-grid;place-items:center;font-size:14px}
+.det{border:1px solid #7a6bff;border-radius:20px;padding:6px 18px;font-size:14px;background:#2a1d8f88;cursor:pointer;color:#fff}
+.mon{grid-column:1}.his{grid-column:2}
+.bot2{grid-column:1/3;display:grid;grid-template-columns:260px 1fr;gap:14px}
+.mon svg{width:100%;height:190px;margin-top:6px}
+.mon .hd,.his .hd{display:flex;justify-content:space-between;align-items:center;direction:rtl}
+.his .all{font-size:12px;color:var(--mut);border-bottom:1px solid var(--line);padding-bottom:4px;margin:8px 0 }
+.hr{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;align-items:center;font-size:13px;padding:11px 4px;border-bottom:1px solid #1d2160;direction:ltr}
+.hr .d{display:flex;justify-content:flex-end;gap:8px;direction:rtl}
+.up{color:var(--pu)}.dn{color:var(--cy)}
+.stt{text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center}
+.stt .g{color:var(--gr);font-weight:700;font-size:18px}.stt small{color:var(--mut)}
+.tl .hd{display:flex;justify-content:flex-end;margin-bottom:10px;direction:rtl}
+.tools{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;direction:ltr}
+.tool{border:1px solid var(--line);background:#0b0e3a;border-radius:12px;padding:14px 4px;text-align:center;font-size:14px;cursor:pointer}
+.tool:hover{border-color:var(--cy);box-shadow:0 0 14px #18c8ff44}
+.tool svg{width:34px;height:34px;display:block;margin:0 auto 8px;stroke:var(--cy);fill:none;stroke-width:1.8}
+.tool.g svg{stroke:var(--gr)}.tool.o svg{stroke:#ff8a3d}.tool.p svg{stroke:#8b7bff}
+.tg{background:#1b1e6a88;border:1px solid var(--line);color:inherit;border-radius:10px;padding:5px 12px;cursor:pointer;font:inherit}
+#ticks,#gv,.gauge text{fill:var(--tx)}.mon svg{color:var(--tx2,#dfe2ff)}
+html[lang=en] *{direction:ltr!important}
+html[data-theme=light]{color-scheme:light;--bg:#eef1ff;--card:#fff;--line:#c4cbf2;--tx:#141847;--mut:#5a6099;--tx2:#2d3270}
+html[data-theme=light] body{background:radial-gradient(1200px 600px at 20% 0,#c9d2ff88,transparent),var(--bg)}
+html[data-theme=light] .app{background:linear-gradient(160deg,#f7f8ff,#e8ecff);box-shadow:0 0 30px #4f46e51a}
+html[data-theme=light] .card{background:linear-gradient(180deg,#fff,#f1f3ff)}
+html[data-theme=light] .mini,html[data-theme=light] .sel,html[data-theme=light] .tool,html[data-theme=light] .wifi,html[data-theme=light] .tg{background:#f4f6ff}
+html[data-theme=light] .ai{background:linear-gradient(135deg,#e6e0ff,#d3dcff);border-color:#9b8cff}
+html[data-theme=light] .nav:not(.on),html[data-theme=light] .top,html[data-theme=light] .logo small,html[data-theme=light] .mini small,html[data-theme=light] .stat span,html[data-theme=light] .ai p,html[data-theme=light] .cp{color:var(--tx2);border-color:var(--tx2)}
+html[data-theme=light] .row,html[data-theme=light] .hr,html[data-theme=light] .stats{border-color:#d3d8f5}
+html[data-theme=light] .pb{background:#d3d8f5}
+html[data-theme=light] .det{background:#fff;color:#3a2fc0}
+html[data-theme=light] .nav:hover{background:#dfe3ff}
+html[data-theme=light] .stt .g,html[data-theme=light] .on-l{color:#0a9a45}
+aside,.top,.row,.q,.wifi,.info .top2,.speed .hd,.mon .hd,.his .hd,.ai{direction:ltr}
+.info h3,.mon h3,.his h3,.speed .hd h3,.tl h3{direction:ltr}
+.ai .tx{direction:rtl}
+.tl .hd{direction:ltr;justify-content:flex-end}
+.tools{direction:rtl}
+.nav{justify-content:flex-start}
+@media(max-width:1050px){.layout,.main,.bot2{grid-template-columns:1fr}.right,.his,.mon,.speed{grid-column:auto;grid-row:auto}.tools{grid-template-columns:repeat(4,1fr)}.speed{grid-template-columns:1fr}.speed .hd,.stats{grid-column:auto}.stats{flex-wrap:wrap;gap:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="logo">
+  <svg class="mark" viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#18c8ff"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><rect x="1" y="1" width="46" height="46" rx="11" fill="#141a38" stroke="#2c3470"/><path d="M14 35V13h4.5l11 15.5V13H34v22h-4.5L18.5 19.5V35z" fill="url(#lg)"/></svg>
+  <div><b>NOVYRA <i>Net</i></b><small>Internet Speed &amp; Network Intelligence</small></div>
+ </div>
+ <div>
+  <div class="top"><button class="tg" id="lb" aria-label="Language">EN</button><button class="tg" id="tm" aria-label="Theme">☀</button><span>⚙ الإعدادات</span><span>ⓘ المساعدة</span><span>—</span><span>☐</span><span>✕</span></div>
+  <span class="slogan">اتصال أسرع .. تجربة أفضل</span>
+ </div>
+</header>
+
+<div class="layout">
+<aside>
+ <div class="nav on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z" fill="currentColor"/></svg>الرئيسية</div>
+ <div class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="9"/><path d="M12 13l4-5"/></svg>اختبار السرعة</div>
+ <div class="nav"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-5 3 3 5-7"/></svg>مراقبة الإنترنت</div>
+ <div class="nav"><svg viewBox="0 0 24 24"><path d="M4 20L16 8M14 4l6 6M4 4l6 6 10 10"/></svg>أدوات الشبكة</div>
+ <div class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>سجل الاختبارات</div>
+ <div class="nav"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M5 7l-3 8h6zM19 7l-3 8h6z"/></svg>مقارنة الشبكات</div>
+ <div class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>إعدادات متقدمة</div>
+ <hr>
+ <div class="nav"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg>حول البرنامج</div>
+ <div class="nav" style="font-size:12px"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>NOVYRA مزيد من برامج</div>
+ <div class="sbl"><svg width="64" height="64" viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="11" fill="#141a38" stroke="#2c3470"/><path d="M14 35V13h4.5l11 15.5V13H34v22h-4.5L18.5 19.5V35z" fill="url(#lg)"/></svg><b>NOVYRA</b><small>Innovative Solutions</small></div>
+</aside>
+
+<div class="main">
+ <section class="card speed">
+  <div class="hd"><h3><span style="color:var(--cy);font-size:28px">⚡</span>اختبار سرعة الإنترنت</h3>
+   <div class="sel"><span class="bars"><i style="height:6px"></i><i style="height:10px"></i><i style="height:14px"></i><i style="height:18px"></i></span>🌐 أفضل سيرفر تلقائيًا ⌄</div></div>
+  <div class="mini"><div class="ar" style="color:var(--cy)">⤓</div><p>سرعة التحميل</p><h2 id="dl">98.76</h2><small>Mbps</small><svg id="s1" viewBox="0 0 200 60" preserveAspectRatio="none"></svg></div>
+  <div class="gauge">
+   <svg viewBox="0 0 400 330">
+    <defs><linearGradient id="gg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1d8bff"/><stop offset=".45" stop-color="#18c8ff"/><stop offset=".7" stop-color="#6d4cff"/><stop offset="1" stop-color="#e040fb"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="4"/></filter></defs>
+    <path d="M94 296A150 150 0 1 1 306 296" fill="none" stroke="url(#gg)" stroke-width="22" stroke-linecap="round" filter="url(#gl)" opacity=".5"/>
+    <path d="M94 296A150 150 0 1 1 306 296" fill="none" stroke="url(#gg)" stroke-width="18" stroke-linecap="round"/>
+    <g id="ticks" fill="#e8eaff" font-size="22" text-anchor="middle"></g>
+    <g id="needle" style="transform-origin:200px 190px;transform:rotate(45deg);transition:transform 1s"><path d="M196 190L200 100l8 4 36-40-36 78z" fill="none"/><path d="M194 196 L246 112 L206 186z" fill="#18c8ff"/></g>
+    <text id="gv" x="200" y="205" text-anchor="middle" font-size="54" font-weight="700" fill="#fff">98.76</text>
+    <text x="200" y="240" text-anchor="middle" font-size="22" fill="#e8eaff">⤓ Mbps</text>
+   </svg>
+   <button class="btn" id="tb"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg><span id="tbt">Start Test</span></button>
+  </div>
+  <div class="mini"><div class="ar" style="color:var(--pu)">⤒</div><p>سرعة الرفع</p><h2 id="ul">45.32</h2><small>Mbps</small><svg id="s2" viewBox="0 0 200 60" preserveAspectRatio="none"></svg></div>
+  <div class="stats">
+   <div class="stat"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="9"/><path d="M12 13l4-5"/></svg><div><span>Ping</span><b id="pg">12 ms</b></div></div>
+   <div class="stat"><svg viewBox="0 0 24 24" style="stroke:var(--pu)"><path d="M2 12h5l3-8 4 16 3-8h5"/></svg><div><span>Jitter</span><b>2 ms</b></div></div>
+   <div class="stat"><svg viewBox="0 0 24 24" style="stroke:var(--gr)"><path d="M12 2l8 3v6c0 5-3 9-8 11-5-2-8-6-8-11V5z"/><path d="M8 12l3 3 5-6"/></svg><div><span>Packet Loss</span><b>0%</b></div></div>
+  </div>
+ </section>
+
+ <div class="right">
+  <section class="card info">
+   <div class="top2"><h3><span style="color:var(--cy)">📶</span>معلومات الاتصال</h3><span class="on-l"><span class="dot"></span>متصل بالإنترنت</span></div>
+   <div class="wifi"><svg viewBox="0 0 60 48"><path d="M5 18a36 36 0 0 1 50 0M14 28a23 23 0 0 1 32 0M23 37a10 10 0 0 1 14 0"/><circle cx="30" cy="44" r="2" fill="#18c8ff"/></svg><div><b>Wi-Fi</b><small>شبكة الاتصال</small></div></div>
+   <div class="row"><span>IP العام</span><span>102.168.1.25 <i class="cp"></i></span></div>
+   <div class="row"><span>IP المحلي</span><span>192.168.1.101 <i class="cp"></i></span></div>
+   <div class="row"><span>مزود الخدمة</span><span>WE Telecom 📶</span></div>
+   <div class="row"><span>DNS</span><span>8.8.8.8 🌐</span></div>
+   <div class="q"><span>جودة الاتصال</span><div class="pb"><i></i></div><b>98%</b></div>
+  </section>
+  <section class="card ai">
+   <div class="bot"><svg viewBox="0 0 110 120" width="110"><ellipse cx="55" cy="108" rx="30" ry="7" fill="#18c8ff33"/><rect x="22" y="14" width="66" height="52" rx="24" fill="#e9ecff"/><rect x="30" y="24" width="50" height="32" rx="15" fill="#0a0d33"/><circle cx="45" cy="40" r="6" fill="#18c8ff"/><circle cx="65" cy="40" r="6" fill="#18c8ff"/><rect x="14" y="30" width="8" height="20" rx="4" fill="#18c8ff"/><rect x="88" y="30" width="8" height="20" rx="4" fill="#18c8ff"/><rect x="32" y="70" width="46" height="34" rx="16" fill="#d9dcf7"/><circle cx="55" cy="86" r="5" fill="#18c8ff"/></svg></div>
+   <div class="tx">
+    <div class="h"><h3>مساعد NOVYRA الذكي</h3><span class="tag">AI</span></div>
+    <div class="ok"><span class="chk">✓</span>اتصالك ممتاز!</div>
+    <p>سرعتك مناسبة لجميع الاستخدامات (الألعاب، البث، والعمل عن بعد).</p>
+    <button class="det">عرض التفاصيل ‹</button>
+   </div>
+  </section>
+ </div>
+
+ <section class="card mon">
+  <div class="hd"><h3><span style="color:var(--cy)">∿</span>مراقبة الإنترنت لحظيًا</h3><div class="sel">آخر 5 دقائق ⌄</div></div>
+  <svg id="ch" viewBox="0 0 640 210" preserveAspectRatio="none"></svg>
+ </section>
+ <section class="card his">
+  <div class="hd"><h3><span style="color:var(--pu)">⟲</span>سجل الاختبارات</h3></div>
+  <div class="all" style="direction:rtl">عرض الكل ›</div>
+  <div class="hr"><span class="dn">⤓ 98.76 Mbps</span><span class="up">⤒ 45.32 Mbps</span><span>◷ 12 ms</span><span class="d">الآن ▦</span></div>
+  <div class="hr"><span class="dn">⤓ 94.21 Mbps</span><span class="up">⤒ 42.17 Mbps</span><span>◷ 14 ms</span><span class="d">أمس ▦</span></div>
+  <div class="hr" style="border:0"><span class="dn">⤓ 87.63 Mbps</span><span class="up">⤒ 39.85 Mbps</span><span>◷ 16 ms</span><span class="d">الجمعة ▦</span></div>
+ </section>
+
+ <div class="bot2">
+  <section class="card stt"><div style="font-size:18px;font-weight:600;display:flex;gap:10px;align-items:center;direction:rtl"><span class="chk" style="width:30px;height:30px">✓</span>حالة الشبكة</div><div class="g">مستقرة ومستقرة</div><small>لا توجد مشاكل في الاتصال</small></section>
+  <section class="card tl">
+   <div class="hd"><h3>أدوات الشبكة السريعة <span style="color:var(--cy)">🛠</span></h3></div>
+   <div class="tools">
+    <div class="tool"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Ping Tool</div>
+    <div class="tool o"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v5M12 12L6 18M12 12l6 6"/></svg>Traceroute</div>
+    <div class="tool g"><svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3 9-8 11-5-2-8-6-8-11V5z"/><path d="M8 12l3 3 5-6"/></svg>فحص المنافذ</div>
+    <div class="tool"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="5" rx="1"/><rect x="4" y="10" width="16" height="5" rx="1"/><rect x="4" y="17" width="16" height="4" rx="1"/></svg>DNS Checker</div>
+    <div class="tool p"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg>معلومات الشبكة</div>
+    <div class="tool p"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 2 4 3 8 3s8-1 8-3V6M4 12v6c0 2 4 3 8 3s8-1 8-3v-6"/></svg>إدارة DNS</div>
+    <div class="tool p"><svg viewBox="0 0 24 24"><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 10v4M12 10v4M17 10v4M8 6a6 6 0 0 1 8 0"/></svg>كشف الراوتر</div>
+   </div>
+  </section>
+ </div>
+</div>
+</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+// gauge ticks
+const labs=["0","10","25","50","100","250","500+"];let t="";
+labs.forEach((l,i)=>{const a=(135+270*i/6)*Math.PI/180,r=118;t+=`<text x="${200+r*Math.cos(a)}" y="${196+r*Math.sin(a)}">${l}</text>`;
+ for(let k=0;k<1;k++){const b=a,x1=200+138*Math.cos(b),y1=190+138*Math.sin(b),x2=200+130*Math.cos(b),y2=190+130*Math.sin(b);}});
+$("ticks").innerHTML=t;
+// sparklines
+function spark(el,c,seed){let pts=[],n=30;for(let i=0;i<n;i++){const y=38-14*Math.sin(i/3+seed)-8*Math.sin(i/1.3)-i*.3;pts.push([i*200/(n-1),y])}
+ const d=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join("");
+ el.innerHTML=`<defs><linearGradient id="f${seed}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".4"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><path d="${d}L200 60L0 60Z" fill="url(#f${seed})"/><path d="${d}" fill="none" stroke="${c}" stroke-width="2"/>`}
+spark($("s1"),"#18c8ff",1);spark($("s2"),"#a855f7",2);
+// live chart
+function wave(base,amp,ph){let d="";for(let x=0;x<=600;x+=10){const y=base-amp*Math.sin(x/55+ph)-amp*.4*Math.sin(x/23+ph*2);d+=(x?"L":"M")+(x+36)+" "+y.toFixed(1)}return d}
+let ph=0;
+function draw(){const a=wave(70,12,ph),b=wave(150,10,ph+1);
+ let g="";[0,25,50,75,100].forEach((v,i)=>{const y=190-v*1.8;g+=`<line x1="36" x2="636" y1="${y}" y2="${y}" stroke="#2a2f80" stroke-width=".6"/><text x="30" y="${y+4}" fill="currentColor" font-size="12" text-anchor="end">${v}</text>`});
+ ["5m","4m","3m","2m","1m",document.documentElement.lang=="en"?"Now":"الآن"].forEach((l,i)=>g+=`<text x="${36+i*120}" y="206" fill="currentColor" font-size="12" text-anchor="${i==5?"end":"middle"}">${l}</text>`);
+ $("ch").innerHTML=`<defs><linearGradient id="c1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18c8ff" stop-opacity=".5"/><stop offset="1" stop-color="#18c8ff" stop-opacity=".05"/></linearGradient><linearGradient id="c2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a855f7" stop-opacity=".4"/><stop offset="1" stop-color="#a855f7" stop-opacity=".05"/></linearGradient></defs>${g}<path d="${a}L636 190L36 190Z" fill="url(#c1)"/><path d="${a}" fill="none" stroke="#18c8ff" stroke-width="2.5"/><path d="${b}L636 190L36 190Z" fill="url(#c2)"/><path d="${b}" fill="none" stroke="#a855f7" stroke-width="2.5"/>`;ph+=.05}
+draw();if(!matchMedia("(prefers-reduced-motion:reduce)").matches)setInterval(draw,120);
+// test button animation
+let running=false;
+$("tb").onclick=()=>{if(running)return;running=true;$("tb").classList.add("busy");$("tbt").textContent="Running...";setTimeout(()=>{running=false;$("tb").classList.remove("busy");$("tbt").textContent="Start Test"},4000)};
+setInterval(()=>{if(!running)return;const d=98.76+(Math.random()-.5)*4,u=45.32+(Math.random()-.5)*2;
+ $("dl").textContent=d.toFixed(2);$("gv").textContent=d.toFixed(2);$("ul").textContent=u.toFixed(2);$("pg").textContent=Math.round(11+Math.random()*2)+" ms";
+ $("needle").style.transform=`rotate(${44+Math.random()*3}deg)`},1200);
+const D={"⚙ الإعدادات":"⚙ Settings","ⓘ المساعدة":"ⓘ Help","اتصال أسرع .. تجربة أفضل":"Faster connection .. better experience","الرئيسية":"Home","اختبار السرعة":"Speed Test","مراقبة الإنترنت":"Internet Monitor","أدوات الشبكة":"Network Tools","سجل الاختبارات":"Test History","مقارنة الشبكات":"Compare Networks","إعدادات متقدمة":"Advanced Settings","حول البرنامج":"About","NOVYRA مزيد من برامج":"More NOVYRA apps","اختبار سرعة الإنترنت":"Internet Speed Test","🌐 أفضل سيرفر تلقائيًا ⌄":"🌐 Auto best server ⌄","سرعة التحميل":"Download Speed","سرعة الرفع":"Upload Speed","جاري الاختبار...":"Testing...","ابدأ الاختبار":"Start test","معلومات الاتصال":"Connection Info","متصل بالإنترنت":"Connected","شبكة الاتصال":"Network","IP العام":"Public IP","IP المحلي":"Local IP","مزود الخدمة":"Provider","جودة الاتصال":"Connection quality","مساعد NOVYRA الذكي":"NOVYRA Smart Assistant","اتصالك ممتاز!":"Your connection is excellent!","سرعتك مناسبة لجميع الاستخدامات (الألعاب، البث، والعمل عن بعد).":"Your speed suits all uses (gaming, streaming and remote work).","عرض التفاصيل ‹":"View details ›","مراقبة الإنترنت لحظيًا":"Live Internet Monitor","آخر 5 دقائق ⌄":"Last 5 minutes ⌄","عرض الكل ›":"View all ›","الآن ▦":"Now ▦","أمس ▦":"Yesterday ▦","الجمعة ▦":"Friday ▦","حالة الشبكة":"Network Status","مستقرة ومستقرة":"Stable and steady","لا توجد مشاكل في الاتصال":"No connection problems","أدوات الشبكة السريعة":"Quick Network Tools","فحص المنافذ":"Port Scanner","معلومات الشبكة":"Network Info","إدارة DNS":"DNS Manager","كشف الراوتر":"Router Detect"};
+const R=Object.fromEntries(Object.entries(D).map(([a,b])=>[b,a]));
+let lang="ar",theme=matchMedia("(prefers-color-scheme:light)").matches?"light":"dark";
+try{const s=(localStorage.getItem("nv")||"").split(",");if(s[0])lang=s[0];if(s[1])theme=s[1]}catch(e){}
+function apply(){const m=lang=="en"?D:R,w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){if(n.parentNode.closest("script,#lb,#tm"))continue;const v=n.nodeValue.trim();if(m[v])n.nodeValue=n.nodeValue.replace(v,m[v])}}
+function setUI(){document.documentElement.lang=lang;document.documentElement.dataset.theme=theme;$("lb").textContent=lang=="en"?"عربي":"EN";$("tm").textContent=theme=="dark"?"☀":"🌙";apply();draw();try{localStorage.setItem("nv",lang+","+theme)}catch(e){}}
+$("lb").onclick=()=>{lang=lang=="en"?"ar":"en";setUI()};
+$("tm").onclick=()=>{theme=theme=="dark"?"light":"dark";setUI()};
+setUI();
+</script>
+</body>
+</html>
