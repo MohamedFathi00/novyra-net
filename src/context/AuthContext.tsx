@@ -1,35 +1,10 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import {
-  createUserWithEmailAndPassword,
-  deleteUser,
-  EmailAuthProvider,
-  onAuthStateChanged,
-  reauthenticateWithCredential,
-  reauthenticateWithPopup,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updatePassword,
-  updateProfile,
-  type User,
-} from 'firebase/auth';
-import { deleteDoc, doc } from 'firebase/firestore';
-import { auth, db, googleProvider, isBootstrapAdminEmail } from '../services/firebase';
 import { supabase, supabaseConfigured } from '../services/supabase';
 import {
   DEFAULT_PLAN_CATALOG,
   getUserEntitlements,
   type ResolvedEntitlements,
 } from '../services/entitlementService';
-import {
-  ensureUserAccountDocs,
-  fetchFeatureFlags,
-  fetchPlansCatalog,
-  fetchUserProfileAndBilling,
-} from '../services/cloudSyncService';
-import { fetchMyServerSubscription } from '../services/billingClientService';
 import type {
   FeatureFlagDoc,
   Language,
@@ -41,7 +16,7 @@ import type {
 } from '../types/network';
 
 interface AuthContextValue {
-  user: User | SupabaseCompatibleUser | null;
+  user: SupabaseCompatibleUser | null;
   loading: boolean;
   emailVerified: boolean;
   isAdmin: boolean;
@@ -103,23 +78,22 @@ function toSupabaseCompatibleUser(raw: {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | SupabaseCompatibleUser | null>(null);
+  const [user, setUser] = useState<SupabaseCompatibleUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<UserProfileDoc | null>(null);
   const [privateInfo, setPrivateInfo] = useState<UserPrivateInfoDoc | null>(null);
   const [subscription, setSubscription] = useState<UserSubscriptionDoc | null>(null);
-  const [entitlementDoc, setEntitlementDoc] = useState<Awaited<ReturnType<typeof fetchUserProfileAndBilling>>['entitlement']>(null);
+  const [entitlementDoc, setEntitlementDoc] = useState<null>(null);
   const [isAdminDoc, setIsAdminDoc] = useState(false);
   const [plansCatalog, setPlansCatalog] = useState<Record<PlanId, SubscriptionPlanConfig>>(DEFAULT_PLAN_CATALOG);
   const [featureFlags, setFeatureFlags] = useState<Record<string, FeatureFlagDoc>>({});
 
   const refreshCatalog = useCallback(async () => {
-    const [plans, flags] = await Promise.all([fetchPlansCatalog(), fetchFeatureFlags()]);
-    setPlansCatalog(plans);
-    setFeatureFlags(flags);
+    setPlansCatalog(DEFAULT_PLAN_CATALOG);
+    setFeatureFlags({});
   }, []);
 
-  const refreshUserState = useCallback(async (currentUser: User | null) => {
+  const refreshUserState = useCallback(async (currentUser: SupabaseCompatibleUser | null) => {
     if (!currentUser) {
       setProfile(null);
       setPrivateInfo(null);
@@ -138,66 +112,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return;
     }
 
-    if (supabaseConfigured) {
-      const displayName = currentUser.displayName || currentUser.email?.split('@')[0] || 'NOVYRA User';
-      setProfile({
-        uid: currentUser.uid,
-        displayName,
-        photoUrl: currentUser.photoURL || undefined,
-        language: document.documentElement.lang === 'en' ? 'en' : 'ar',
-        accountStatus: 'active',
-      });
-      setPrivateInfo({ uid: currentUser.uid, email: currentUser.email || '' });
-      setSubscription({
-        userId: currentUser.uid,
-        planId: 'free',
-        billingCycle: 'none',
-        status: 'active',
-        provider: 'supabase',
-        cancelAtPeriodEnd: false,
-      });
-      setEntitlementDoc(null);
-      setIsAdminDoc(isBootstrapAdminEmail(currentUser.email));
-      return;
-    }
-
-    const isBootstrapAdmin = Boolean(
-      currentUser.emailVerified && isBootstrapAdminEmail(currentUser.email),
-    );
-
-    await ensureUserAccountDocs({
-      uid: currentUser.uid,
-      email: currentUser.email || '',
-      displayName: currentUser.displayName || currentUser.email?.split('@')[0] || 'NOVYRA User',
-      photoUrl: currentUser.photoURL,
-      language: document.documentElement.lang === 'en' ? 'en' : 'ar',
-      isBootstrapAdmin,
-    });
-
-    const token = await currentUser.getIdToken().catch(() => null);
-    const [data, serverSub] = await Promise.all([
-      fetchUserProfileAndBilling(currentUser.uid),
-      token ? fetchMyServerSubscription(token).catch(() => null) : Promise.resolve(null),
-    ]);
-    setProfile(data.profile);
-    setPrivateInfo(data.privateInfo);
-    if (serverSub && serverSub.status === 'active' && serverSub.planId !== 'free') {
-      setSubscription(
-        data.subscription ?? {
-          userId: currentUser.uid,
-          planId: serverSub.planId,
-          billingCycle: serverSub.billingCycle,
-          status: 'active',
-          provider: serverSub.provider,
-          cancelAtPeriodEnd: false,
-        },
-      );
-      setEntitlementDoc(data.entitlement);
-    } else {
-      setSubscription(data.subscription);
-      setEntitlementDoc(data.entitlement);
-    }
-    setIsAdminDoc(data.isAdminDoc || isBootstrapAdmin);
+    const displayName = currentUser.displayName || currentUser.email?.split('@')[0] || 'NOVYRA User';
+    setProfile({ uid: currentUser.uid, displayName, photoUrl: currentUser.photoURL || undefined, language: document.documentElement.lang === 'en' ? 'en' : 'ar', accountStatus: 'active' });
+    setPrivateInfo({ uid: currentUser.uid, email: currentUser.email || '' });
+    setSubscription({ userId: currentUser.uid, planId: 'free', billingCycle: 'none', status: 'active', provider: 'supabase', cancelAtPeriodEnd: false });
+    setEntitlementDoc(null);
+    setIsAdminDoc(currentUser.email?.trim().toLowerCase() === 'me40351@gmail.com');
   }, []);
 
   useEffect(() => {
@@ -211,7 +131,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const nextUser = toSupabaseCompatibleUser(data.session?.user || null);
         setUser(nextUser);
         try {
-          await refreshUserState(nextUser as User | null);
+        await refreshUserState(nextUser);
         } finally {
           if (active) setLoading(false);
         }
@@ -220,30 +140,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data: listener } = supabaseClient.auth.onAuthStateChange((_event, next) => {
         const nextUser = toSupabaseCompatibleUser(next?.user || null);
         setUser(nextUser);
-        refreshUserState(nextUser as User | null).catch((err) => console.error('Supabase auth bootstrap error:', err));
+        refreshUserState(nextUser).catch((err) => console.error('Supabase auth bootstrap error:', err));
       });
       return () => {
         active = false;
         listener.subscription.unsubscribe();
       };
     }
-    const unsub = onAuthStateChanged(auth, async (nextUser) => {
-      setUser(nextUser);
-      try {
-        await refreshUserState(nextUser);
-      } catch (err) {
-        console.error('Auth state bootstrap error:', err);
-      } finally {
-        setLoading(false);
-      }
-    });
-    return () => unsub();
+    setLoading(false);
+    return undefined;
   }, [refreshCatalog, refreshUserState]);
 
   const emailVerified = Boolean(user?.emailVerified);
-  const isBootstrapAdmin = Boolean(
-    user?.emailVerified && isBootstrapAdminEmail(user.email),
-  );
+  const isBootstrapAdmin = Boolean(user?.emailVerified && user.email?.trim().toLowerCase() === 'me40351@gmail.com');
   const isAdmin = Boolean(emailVerified && (isBootstrapAdmin || isAdminDoc));
   const isSuspended = !isAdmin && profile?.accountStatus === 'suspended';
 
@@ -259,21 +168,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 
   const signInWithGoogle = useCallback(async () => {
-    if (supabaseConfigured && supabase) {
-      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
-      if (error) throw error;
-      return;
-    }
-    await signInWithPopup(auth, googleProvider);
+    if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+    const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
+    if (error) throw error;
   }, []);
 
   const signInWithEmail = useCallback(async (email: string, password: string) => {
-    if (supabaseConfigured && supabase) {
-      const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-      if (error) throw error;
-      return;
-    }
-    await signInWithEmailAndPassword(auth, email.trim(), password);
+    if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    if (error) throw error;
   }, []);
 
   const registerWithEmail = useCallback(
@@ -284,33 +187,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       country?: string;
       language: Language;
     }) => {
-      if (supabaseConfigured && supabase) {
-        const { data, error } = await supabase.auth.signUp({
-          email: params.email.trim(),
-          password: params.password,
-          options: { data: { display_name: params.displayName.trim().slice(0, 100) }, emailRedirectTo: window.location.origin },
-        });
-        if (error) throw error;
-        return { verificationSent: !data.session };
-      }
-      const cred = await createUserWithEmailAndPassword(auth, params.email.trim(), params.password);
-      await updateProfile(cred.user, { displayName: params.displayName.trim().slice(0, 100) });
-      await sendEmailVerification(cred.user);
-      return { verificationSent: true };
+      if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+      const { data, error } = await supabase.auth.signUp({ email: params.email.trim(), password: params.password, options: { data: { display_name: params.displayName.trim().slice(0, 100) }, emailRedirectTo: window.location.origin } });
+      if (error) throw error;
+      return { verificationSent: !data.session };
     },
     [],
   );
 
   const resendVerification = useCallback(async () => {
-    if (supabaseConfigured && supabase) {
-      const email = user?.email;
-      if (!email) return;
-      const { error } = await supabase.auth.resend({ type: 'signup', email });
-      if (error) throw error;
-      return;
-    }
-    if (!auth.currentUser) return;
-    await sendEmailVerification(auth.currentUser);
+    if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+    const email = user?.email;
+    if (!email) return;
+    const { error } = await supabase.auth.resend({ type: 'signup', email });
+    if (error) throw error;
   }, []);
 
   const reloadUser = useCallback(async () => {
@@ -319,87 +209,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       const updated = toSupabaseCompatibleUser(data.user);
       setUser(updated);
-      await refreshUserState(updated as User | null);
+      await refreshUserState(updated);
       return;
     }
-    if (!auth.currentUser) return;
-    await auth.currentUser.reload();
-    const updated = auth.currentUser;
-    setUser(updated);
-    await refreshUserState(updated);
+    throw new Error('SUPABASE_NOT_CONFIGURED');
   }, [refreshUserState]);
 
   const requestPasswordReset = useCallback(async (email: string) => {
-    if (supabaseConfigured && supabase) {
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: `${window.location.origin}/reset-password` });
-      if (error) throw error;
-      return;
-    }
-    await sendPasswordResetEmail(auth, email.trim());
+    if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: `${window.location.origin}/reset-password` });
+    if (error) throw error;
   }, []);
 
   const logout = useCallback(async () => {
-    if (supabaseConfigured && supabase) {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      return;
-    }
-    await signOut(auth);
+    if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
   }, []);
 
   const changePassword = useCallback(async (currentPassword: string, newPassword: string) => {
-    if (supabaseConfigured && supabase) {
-      const { error } = await supabase.auth.updateUser({ password: newPassword });
-      if (error) throw error;
-      return;
-    }
-    const current = auth.currentUser;
-    if (!current || !current.email) throw new Error('No email-authenticated user session.');
-    const cred = EmailAuthProvider.credential(current.email, currentPassword);
-    await reauthenticateWithCredential(current, cred);
-    await updatePassword(current, newPassword);
+    void currentPassword;
+    if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) throw error;
   }, []);
 
   const deleteAccountSafely = useCallback(async (currentPassword?: string) => {
-    if (supabaseConfigured && supabase) {
-      throw new Error('ACCOUNT_DELETE_REQUIRES_SERVER_ADMIN');
-    }
-    const current = auth.currentUser;
-    if (!current) throw new Error('Not signed in.');
-    const usesPassword = current.providerData.some((p) => p.providerId === 'password');
-    if (usesPassword) {
-      if (!currentPassword || !current.email) {
-        throw new Error('REAUTH_PASSWORD_REQUIRED');
-      }
-      const cred = EmailAuthProvider.credential(current.email, currentPassword);
-      await reauthenticateWithCredential(current, cred);
-    } else {
-      await reauthenticateWithPopup(current, googleProvider);
-    }
-
-    try {
-      await deleteDoc(doc(db, 'users', current.uid, 'private', 'info'));
-      await deleteDoc(doc(db, 'users', current.uid));
-    } catch {
-      // Proceed to delete auth account even if secondary docs absent
-    }
-    await deleteUser(current);
+    void currentPassword;
+    throw new Error('ACCOUNT_DELETE_REQUIRES_SERVER_ADMIN');
   }, []);
 
   const getIdToken = useCallback(async () => {
-    if (supabaseConfigured && supabase) {
-      const { data } = await supabase.auth.getSession();
-      return data.session?.access_token || null;
-    }
-    if (!auth.currentUser) return null;
-    return auth.currentUser.getIdToken();
+    if (!supabaseConfigured || !supabase) return null;
+    const { data } = await supabase.auth.getSession();
+    return data.session?.access_token || null;
   }, []);
 
   const refreshBillingAndProfile = useCallback(async () => {
-    const current = supabaseConfigured && supabase
-      ? toSupabaseCompatibleUser((await supabase.auth.getUser()).data.user)
-      : auth.currentUser;
-    await Promise.all([refreshCatalog(), refreshUserState(current as User | null)]);
+    if (!supabaseConfigured || !supabase) throw new Error('SUPABASE_NOT_CONFIGURED');
+    const current = toSupabaseCompatibleUser((await supabase.auth.getUser()).data.user);
+    await Promise.all([refreshCatalog(), refreshUserState(current)]);
   }, [refreshCatalog, refreshUserState]);
 
   const value: AuthContextValue = {

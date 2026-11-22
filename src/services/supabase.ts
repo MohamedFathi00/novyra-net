@@ -6,8 +6,6 @@ const supabaseAnonKey = String(import.meta.env.VITE_SUPABASE_ANON_KEY || '').tri
 export const supabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 export const supabaseProjectUrl = supabaseUrl;
 
-// Firebase remains available as a fallback until the hosted environment receives
-// the two VITE_SUPABASE_* variables. This keeps the existing local setup intact.
 export const supabase: SupabaseClient | null = supabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },

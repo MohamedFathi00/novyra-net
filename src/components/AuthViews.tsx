@@ -26,6 +26,11 @@ interface AuthViewsProps {
 
 function mapFirebaseAuthError(err: unknown, isAr: boolean): string {
   const code = (err as { code?: string })?.code || '';
+  if (err instanceof Error && err.message === 'SUPABASE_NOT_CONFIGURED') {
+    return isAr
+      ? 'تسجيل الدخول السحابي غير مُعدّ بعد. أضف VITE_SUPABASE_ANON_KEY في إعدادات Vercel.'
+      : 'Cloud sign-in is not configured yet. Add VITE_SUPABASE_ANON_KEY in Vercel project settings.';
+  }
   if (code.includes('operation-not-allowed')) {
     return isAr
       ? 'مزود البريد وكلمة المرور غير مفعّل بعد في Firebase Console. يمكنك تسجيل الدخول فوراً عبر Google أو تفعيل Email/Password من إعدادات Authentication في Firebase.'
